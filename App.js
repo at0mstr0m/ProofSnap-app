@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
-  useFonts,
   Montserrat_400Regular,
   Montserrat_900Black,
 } from "@expo-google-fonts/montserrat";
@@ -10,6 +9,12 @@ import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 
 import HomeScreen from "./screens/HomeScreen";
+import AboutScreen from "./screens/AboutScreen";
+import COLORS from "./constants/colors";
+import LoginScreen from "./screens/LoginScreen";
+import TakePhotoScreen from "./screens/TakePhotoScreen";
+import VerifyPhotoScreen from "./screens/VerifyPhotoScreen";
+import AllPhotosScreen from "./screens/AllPhotosScreen";
 
 // https://reactnavigation.org/docs/hello-react-navigation#creating-a-native-stack-navigator
 const Stack = createNativeStackNavigator();
@@ -56,11 +61,51 @@ export default function App() {
 
   return (
     <NavigationContainer onReady={onLayoutRootView}>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="HomeScreen">
         <Stack.Screen
-          name="Home"
+          name="HomeScreen"
           component={HomeScreen}
           options={{ headerShown: false }} // https://reactnavigation.org/docs/native-stack-navigator/#headershown
+        />
+        <Stack.Screen
+          name="AboutScreen"
+          component={AboutScreen}
+          options={{
+            animation: "slide_from_right",
+            headerStyle: { backgroundColor: COLORS.header },
+          }}
+        />
+        <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{
+            animation: "slide_from_right",
+            headerStyle: { backgroundColor: COLORS.header },
+          }}
+        />
+        <Stack.Screen
+          name="TakePhotoScreen"
+          component={TakePhotoScreen}
+          options={{
+            animation: "slide_from_right",
+            headerStyle: { backgroundColor: COLORS.header },
+          }}
+        />
+        <Stack.Screen
+          name="VerifyPhotoScreen"
+          component={VerifyPhotoScreen}
+          options={{
+            animation: "slide_from_right",
+            headerStyle: { backgroundColor: COLORS.header },
+          }}
+        />
+        <Stack.Screen
+          name="AllPhotosScreen"
+          component={AllPhotosScreen}
+          options={{
+            animation: "slide_from_right",
+            headerStyle: { backgroundColor: COLORS.header },
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

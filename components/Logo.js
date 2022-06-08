@@ -4,7 +4,12 @@ import COLORS from "../constants/colors";
 export default function Logo() {
   const { width, height } = useWindowDimensions();
   return (
-    <View style={[styles.container, { marginTop: height / 10 }]}>
+    <View
+      style={[
+        styles.container,
+        { marginTop: height / 10, marginBottom: height / 20 },
+      ]}
+    >
       <Text style={styles.textContainer}>
         <Text style={styles.bold}>P</Text>
         <Text style={styles.regular}>roofSna</Text>
