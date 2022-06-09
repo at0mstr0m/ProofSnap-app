@@ -12,28 +12,28 @@ import {
 } from "expo-media-library";
 import * as FileSystem from "expo-file-system";
 
-const convertLocalIdentifierToAssetLibrary = (localIdentifier, ext) => {
-  const hash = localIdentifier.split("/")[0];
-  return `assets-library://asset/asset.${ext}?id=${hash}&ext=${ext}`;
-};
+// const convertLocalIdentifierToAssetLibrary = (localIdentifier, ext) => {
+//   const hash = localIdentifier.split("/")[0];
+//   return `assets-library://asset/asset.${ext}?id=${hash}&ext=${ext}`;
+// };
 
-const getAssets = async (params = { first: 11 }) => {
-  if (Platform.OS === "android" && !(await Keyboard.hasAndroidPermission())) {
-    return;
-  }
+// const getAssets = async (params = { first: 11 }) => {
+//   if (Platform.OS === "android" && !(await Keyboard.hasAndroidPermission())) {
+//     return;
+//   }
 
-  let result = await CameraRoll.getPhotos({ ...params, assetType: "All" });
-  result.edges.map(async (edge) => {
-    if (Platform.OS === "ios") {
-      edge.node.image.uri = convertLocalIdentifierToAssetLibrary(
-        edge.node.image.uri.replace("ph://", ""),
-        edge.node.type === "image" ? "jpg" : "mov"
-      );
-    }
-    return;
-  });
-  return result;
-};
+//   let result = await CameraRoll.getPhotos({ ...params, assetType: "All" });
+//   result.edges.map(async (edge) => {
+//     if (Platform.OS === "ios") {
+//       edge.node.image.uri = convertLocalIdentifierToAssetLibrary(
+//         edge.node.image.uri.replace("ph://", ""),
+//         edge.node.type === "image" ? "jpg" : "mov"
+//       );
+//     }
+//     return;
+//   });
+//   return result;
+// };
 
 export default function TakePhotoScreen() {
   const [image, setImage] = useState(null);
@@ -43,6 +43,7 @@ export default function TakePhotoScreen() {
       allowsEditing: false,
       base64: true,
       // quality: 0.01,
+
     });
     // width and height are confused on iOS, so they have to be switched
     if (Platform.OS === "ios") {
