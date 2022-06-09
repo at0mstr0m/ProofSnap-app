@@ -5,9 +5,37 @@ import { launchCameraAsync } from "expo-image-picker";
 import HomeScreenButtonWhite from "../components/HomeScreenButtonWhite";
 import * as RNHash from "react-native-hash";
 import axios from "axios";
-import { saveToLibraryAsync } from "expo-media-library";
+import {
+  saveToLibraryAsync,
+  createAssetAsync,
+  requestPermissionsAsync,
+} from "expo-media-library";
+import * as FileSystem from "expo-file-system";
 
-export default function TakePhotoScreen({ params }) {
+const convertLocalIdentifierToAssetLibrary = (localIdentifier, ext) => {
+  const hash = localIdentifier.split("/")[0];
+  return `assets-library://asset/asset.${ext}?id=${hash}&ext=${ext}`;
+};
+
+const getAssets = async (params = { first: 11 }) => {
+  if (Platform.OS === "android" && !(await Keyboard.hasAndroidPermission())) {
+    return;
+  }
+
+  let result = await CameraRoll.getPhotos({ ...params, assetType: "All" });
+  result.edges.map(async (edge) => {
+    if (Platform.OS === "ios") {
+      edge.node.image.uri = convertLocalIdentifierToAssetLibrary(
+        edge.node.image.uri.replace("ph://", ""),
+        edge.node.type === "image" ? "jpg" : "mov"
+      );
+    }
+    return;
+  });
+  return result;
+};
+
+export default function TakePhotoScreen() {
   const [image, setImage] = useState(null);
 
   async function takeImage() {
@@ -35,13 +63,31 @@ export default function TakePhotoScreen({ params }) {
         image.file,
         image.width,
       ]);
+      // https://docs.expo.dev/versions/v45.0.0/sdk/media-library/#medialibraryrequestpermissionsasyncwriteonly
+      const response = await requestPermissionsAsync();
+      if (response.granted) {
+        try {
+          const asset = await createAssetAsync(image.uri);
+          console.log("assetassetassetassetasset=", asset);
+          const foo = await getAssets(asset);
+          console.log(foo);
+          // const base64string = FileSystem.readAsStringAsync(await fetch(asset.uri), {
+          //   encoding: "base64",
+          // });
+        } catch (error) {
+          console.log("bump");
+          console.error(error);
+          console.log("bump");
+        }
+      }
+    } else if (Platform.OS === "android") {
+      try {
+        saveToLibraryAsync(image.uri);
+      } catch (error) {
+        console.error(error);
+      }
+      console.log(image.base64.length);
     }
-    try {
-      saveToLibraryAsync(image.uri);
-    } catch (error) {
-      console.error(error);
-    }
-    console.log(image.base64.length);
     let sha256Hash;
     let sha512Hash;
     try {
