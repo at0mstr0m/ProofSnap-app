@@ -5,6 +5,7 @@ import { launchCameraAsync } from "expo-image-picker";
 import HomeScreenButtonWhite from "../components/HomeScreenButtonWhite";
 import * as RNHash from "react-native-hash";
 import axios from "axios";
+import { saveToLibraryAsync } from "expo-media-library";
 
 export default function TakePhotoScreen({ params }) {
   const [image, setImage] = useState(null);
@@ -25,6 +26,22 @@ export default function TakePhotoScreen({ params }) {
   }
 
   async function onSendButtonPressed() {
+    if (Platform.OS === "ios") {
+      console.log([
+        image.cancelled,
+        image.height,
+        image.type,
+        image.uri,
+        image.file,
+        image.width,
+      ]);
+    }
+    try {
+      saveToLibraryAsync(image.uri);
+    } catch (error) {
+      console.error(error);
+    }
+    console.log(image.base64.length);
     let sha256Hash;
     let sha512Hash;
     try {

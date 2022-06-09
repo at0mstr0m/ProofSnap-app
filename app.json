@@ -31,7 +31,16 @@
       [
         "expo-image-picker",
         {
-          "cameraPermission": "The app accesses your camera to take photos."
+          "cameraPermission": "The app accesses your camera to take photos.",
+          "photosPermission": "The app accesses your photos to let you verify them."
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
+          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+          "isAccessMediaLocationEnabled": true
         }
       ]
     ]
