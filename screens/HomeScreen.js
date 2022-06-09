@@ -38,7 +38,7 @@ export default function HomeScreen({ navigation }) {
           endColor={COLORS.greenGradient.end}
           position="left"
         >
-          About
+          Info
         </HomeScreenButtonGradient>
         <HomeScreenButtonGradient
           onPress={onLoginButtonPressed}

@@ -89,6 +89,7 @@ export default function App() {
           options={{
             animation: "slide_from_right",
             headerStyle: { backgroundColor: COLORS.header },
+            title: "Signiertes Foto erstellen"
           }}
         />
         <Stack.Screen

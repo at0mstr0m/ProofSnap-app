@@ -31,6 +31,15 @@ export default function HomeScreenButtonWhite({ children, onPress, iconName }) {
         <Foundation name="photo" size={ICON_SIZE} color={COLORS.buttonText} />
       );
       break;
+    case "send":
+      icon = (
+        <Foundation
+          name="arrow-right"
+          size={ICON_SIZE}
+          color={COLORS.buttonText}
+        />
+      );
+      break;
     default:
       icon = null;
       break;
