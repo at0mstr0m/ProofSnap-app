@@ -5,7 +5,12 @@ import { launchCameraAsync } from "expo-image-picker";
 import HomeScreenButtonWhite from "../components/HomeScreenButtonWhite";
 import * as RNHash from "react-native-hash";
 import axios from "axios";
-import { saveToLibraryAsync } from "expo-media-library";
+import {
+  saveToLibraryAsync,
+  createAssetAsync,
+  getAssetInfoAsync,
+  requestPermissionsAsync
+} from "expo-media-library";
 
 export default function TakePhotoScreen({ params }) {
   const [image, setImage] = useState(null);
@@ -15,6 +20,7 @@ export default function TakePhotoScreen({ params }) {
       allowsEditing: false,
       base64: true,
       // quality: 0.01,
+      // quality: 0.99,
     });
     // width and height are confused on iOS, so they have to be switched
     if (Platform.OS === "ios") {
@@ -25,7 +31,19 @@ export default function TakePhotoScreen({ params }) {
     setImage(newImage);
   }
 
+  // https://stackoverflow.com/a/59290908
+  async function getAssetInfo(uri) {
+    const assetId = uri.slice(5);
+    const assetInfo = await getAssetInfoAsync(assetId);
+    return assetInfo;
+  }
+
   async function onSendButtonPressed() {
+    const response = await requestPermissionsAsync();
+    if (!response.granted) {
+      console.error("permission not granted");
+      return;
+    }
     if (Platform.OS === "ios") {
       console.log([
         image.cancelled,
@@ -34,12 +52,27 @@ export default function TakePhotoScreen({ params }) {
         image.uri,
         image.file,
         image.width,
+        // image.base64,
       ]);
-    }
-    try {
-      saveToLibraryAsync(image.uri);
-    } catch (error) {
-      console.error(error);
+      try {
+        console.log("bump");
+        const asset = await createAssetAsync(image.uri);
+        // // console.log(asset);
+        // const assetInfo = await getAssetInfo(asset.uri);
+        // // console.log("assetInfo.localUri=", assetInfo.localUri);
+        // const base64StringForCreatedAsset = await base64forImageUriAsync(
+        //   assetInfo.localUri
+        // );
+        console.log("bump");
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      try {
+        await createAssetAsync(image.uri);
+      } catch (error) {
+        console.error(error);
+      }
     }
     console.log(image.base64.length);
     let sha256Hash;
@@ -86,7 +119,7 @@ export default function TakePhotoScreen({ params }) {
           },
         }
       );
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.error(error);
     }

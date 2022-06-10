@@ -15,11 +15,11 @@ export default function VerifyPhotoScreen({ params }) {
       // quality: 0.01,
     });
     // width and height are confused on iOS, so they have to be switched
-    // if (Platform.OS === "ios") {
-    //   let height = newImage.height;
-    //   newImage.height = newImage.width;
-    //   newImage.width = height;
-    // }
+    if (Platform.OS === "ios") {
+      let height = newImage.height;
+      newImage.height = newImage.width;
+      newImage.width = height;
+    }
     setImage(newImage);
   }
 
@@ -32,6 +32,7 @@ export default function VerifyPhotoScreen({ params }) {
         image.uri,
         image.file,
         image.width,
+        // image.base64,
       ]);
     }
     console.log(image.base64.length);
