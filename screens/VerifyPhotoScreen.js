@@ -24,17 +24,6 @@ export default function VerifyPhotoScreen({ params }) {
   }
 
   async function checkSignature() {
-    if (Platform.OS === "ios") {
-      console.log([
-        image.cancelled,
-        image.height,
-        image.type,
-        image.uri,
-        image.file,
-        image.width,
-        // image.base64,
-      ]);
-    }
     console.log(image.base64.length);
     let sha256Hash;
     let sha512Hash;
