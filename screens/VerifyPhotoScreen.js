@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, Button, Image, Platform } from "react-native";
 import COLORS from "../constants/colors";
 import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
 import * as RNHash from "react-native-hash";
+import { generateHashes } from "../helpers/HashHelper";
+import { verifyHashes } from "../helpers/HttpHelper";
 
 export default function VerifyPhotoScreen({ params }) {
   const [image, setImage] = useState(null);
@@ -24,23 +26,9 @@ export default function VerifyPhotoScreen({ params }) {
   }
 
   async function checkSignature() {
-    console.log(image.base64.length);
-    let sha256Hash;
-    let sha512Hash;
-    try {
-      sha256Hash = await RNHash.JSHash(
-        image.base64,
-        RNHash.CONSTANTS.HashAlgorithms.sha256
-      );
-      sha512Hash = await RNHash.JSHash(
-        image.base64,
-        RNHash.CONSTANTS.HashAlgorithms.sha512
-      );
-      console.log(sha256Hash);
-      console.log(sha512Hash);
-    } catch (error) {
-      console.error("error");
-    }
+    const { sha256Hash, sha512Hash } = await generateHashes(image.base64);
+    const response = await verifyHashes(sha256Hash, sha512Hash);
+    console.log(response.data);
   }
 
   if (image === null || image.cancelled === true) {

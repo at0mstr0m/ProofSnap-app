@@ -40,6 +40,7 @@ export default function TakePhotoScreen() {
     console.log(httpResponse);
   }
 
+  // directly open camera when screen is called
   useEffect(() => {
     takeImage();
   }, []);
