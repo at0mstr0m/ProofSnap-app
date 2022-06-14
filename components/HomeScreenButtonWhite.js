@@ -8,9 +8,7 @@ import {
 } from "react-native";
 import { Foundation } from "@expo/vector-icons";
 import COLORS from "../constants/colors";
-
-const BORDER_RADIUS = 8;
-const ICON_SIZE = 30;
+import { SHADOW, BORDER_RADIUS, ICON_SIZE } from "../constants/design";
 
 export default function HomeScreenButtonWhite({ children, onPress, iconName }) {
   const { width, height } = useWindowDimensions();
@@ -46,7 +44,7 @@ export default function HomeScreenButtonWhite({ children, onPress, iconName }) {
   }
 
   return (
-    <View style={[styles.buttonOuterContainer, { minWidth: (width * 3) / 4 }]}>
+    <View style={[styles.buttonOuterContainer, { width: (width * 3) / 4 }]}>
       <Pressable
         style={({ pressed }) =>
           pressed
@@ -65,14 +63,9 @@ export default function HomeScreenButtonWhite({ children, onPress, iconName }) {
 
 const styles = StyleSheet.create({
   buttonOuterContainer: {
+    ...SHADOW,
     backgroundColor: "white",
     borderRadius: BORDER_RADIUS,
-    overflow: Platform.OS === "android" ? "hidden" : null,
-    elevation: 5,
-    shadowColor: "#000000",
-    shadowOffset: { width: 1, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
     margin: 10,
   },
   buttonInnerContainer: {

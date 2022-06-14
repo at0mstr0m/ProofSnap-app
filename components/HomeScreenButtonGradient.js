@@ -6,8 +6,7 @@ import {
   Platform,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-
-const BORDER_RADIUS = 8;
+import { SHADOW, BORDER_RADIUS } from "../constants/design";
 
 export default function HomeScreenButtonGradient({
   children,
@@ -51,14 +50,9 @@ export default function HomeScreenButtonGradient({
 
 const styles = StyleSheet.create({
   buttonOuterContainer: {
+    ...SHADOW,
     backgroundColor: "white",
     borderRadius: BORDER_RADIUS,
-    overflow: Platform.OS === "android" ? "hidden" : null,
-    elevation: 5,
-    shadowColor: "#000000",
-    shadowOffset: { width: 1, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
     flex: 2,
     marginBottom: 10,
   },

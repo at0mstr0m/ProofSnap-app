@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { StyleSheet, View, Text, Button, Image, Platform } from "react-native";
 import COLORS from "../constants/colors";
 import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
-import * as RNHash from "react-native-hash";
 import { generateHashes } from "../helpers/HashHelper";
 import { verifyHashes } from "../helpers/HttpHelper";
 
@@ -14,8 +13,10 @@ export default function VerifyPhotoScreen({ params }) {
       mediaTypes: MediaTypeOptions.Images,
       allowsEditing: false,
       base64: true,
+      exif: true,
       // quality: 0.01,
     });
+    console.log(newImage.exif);
     // width and height are confused on iOS, so they have to be switched
     if (Platform.OS === "ios") {
       let height = newImage.height;

@@ -1,23 +1,42 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, Text, Image, Platform } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+  TextInput,
+  useWindowDimensions,
+  Alert,
+} from "react-native";
 import COLORS from "../constants/colors";
 import { launchCameraAsync } from "expo-image-picker";
 import HomeScreenButtonWhite from "../components/HomeScreenButtonWhite";
-import axios from "axios";
 import { createAssetAsync, requestPermissionsAsync } from "expo-media-library";
 import { generateHashes } from "../helpers/HashHelper";
 import { signHashes } from "../helpers/HttpHelper";
+import ImagePreview from "../components/ImagePreview";
 
 export default function TakePhotoScreen() {
   const [image, setImage] = useState(null);
+  const [enteredTitle, setEnteredTitle] = useState("");
+  const { width, height } = useWindowDimensions();
+
+  function titleInputHandler(enteredText) {
+    setEnteredTitle(enteredText);
+  }
 
   async function takeImage() {
     const newImage = await launchCameraAsync({
       allowsEditing: false,
       base64: true,
+      exif: true,
       // quality: 0.01,
       // quality: 0.99,
     });
+    // cannot go on without an image
+    if (newImage.cancelled) return;
+    console.log(newImage.exif);
+
     // width and height are confused on iOS, so they have to be switched
     if (Platform.OS === "ios") {
       let height = newImage.height;
@@ -28,6 +47,12 @@ export default function TakePhotoScreen() {
   }
 
   async function onSendButtonPressed() {
+    if (enteredTitle === "") {
+      Alert.alert("Titel fehlt", "Bitte geben Sie einen Titel ein", [
+        { text: "OK", style: "destructive" },
+      ]);
+      return;
+    }
     const permissionResponse = await requestPermissionsAsync();
     if (!permissionResponse.granted) {
       console.error("permission not granted");
@@ -55,13 +80,13 @@ export default function TakePhotoScreen() {
 
   return (
     <View style={[styles.container]}>
-      <Image
-        style={styles.image}
-        source={{
-          uri: image.uri,
-          width: image.height * 0.1,
-          height: image.width * 0.1,
-        }}
+      <ImagePreview image={image} />
+      <TextInput
+        style={[styles.titleInput, { width: (width * 3) / 4 }]}
+        maxLength={100}
+        placeholder="Titel"
+        onChangeText={titleInputHandler}
+        value={enteredTitle}
       />
       <HomeScreenButtonWhite iconName="send" onPress={onSendButtonPressed}>
         Signatur erstellen
@@ -75,9 +100,21 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
   },
-  image: {
-    marginBottom: 50,
+  titleInput: {
+    backgroundColor: "white",
+    borderRadius: 8,
+    overflow: Platform.OS === "android" ? "hidden" : null,
+    elevation: 5,
+    shadowColor: "#000000",
+    shadowOffset: { width: 1, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    margin: 10,
+    height: 50,
+    padding: 12,
+    fontSize: 20,
+    fontFamily: "Montserrat_400Regular",
+    color: COLORS.buttonText,
   },
 });
