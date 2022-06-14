@@ -1,5 +1,8 @@
 const COLORS = Object.freeze({
   background: "#E6EFFF",
+  backgroundYellow: "#ebf192",
+  backgroundGreen: "#9af192",
+  backgroundRed: "#f19892",
   header: "#a8c4f5",
   buttonText: "#001571",
   redGradient: { start: "#D82828", end: "#F88181" },

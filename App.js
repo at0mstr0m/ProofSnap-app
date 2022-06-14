@@ -15,6 +15,9 @@ import LoginScreen from "./screens/LoginScreen";
 import TakePhotoScreen from "./screens/TakePhotoScreen";
 import VerifyPhotoScreen from "./screens/VerifyPhotoScreen";
 import AllPhotosScreen from "./screens/AllPhotosScreen";
+import SendingScreen from "./screens/SendingScreen";
+import SendingSuccessfulScreen from "./screens/SendingSuccessfulScreen";
+import SendingFailedScreen from "./screens/SendingFailedScreen";
 
 // https://reactnavigation.org/docs/hello-react-navigation#creating-a-native-stack-navigator
 const Stack = createNativeStackNavigator();
@@ -89,7 +92,7 @@ export default function App() {
           options={{
             animation: "slide_from_right",
             headerStyle: { backgroundColor: COLORS.header },
-            title: "Signiertes Foto erstellen"
+            title: "Signiertes Foto erstellen",
           }}
         />
         <Stack.Screen
@@ -98,11 +101,41 @@ export default function App() {
           options={{
             animation: "slide_from_right",
             headerStyle: { backgroundColor: COLORS.header },
+            title: "Foto verifizieren",
           }}
         />
         <Stack.Screen
           name="AllPhotosScreen"
           component={AllPhotosScreen}
+          options={{
+            animation: "slide_from_right",
+            headerStyle: { backgroundColor: COLORS.header },
+          }}
+        />
+        <Stack.Screen
+          name="SendingScreen"
+          component={SendingScreen}
+          options={{
+            animation: "slide_from_right",
+            headerTitleAlign: "center",
+            headerStyle: { backgroundColor: COLORS.header },
+            // https://freakycoder.com/react-native-notes-28-how-to-prevent-go-back-with-react-navigation-v6-f214c45f6315
+            gestureEnabled: false,
+            headerBackVisible: false,
+            headerLeft: () => <></>,
+          }}
+        />
+        <Stack.Screen
+          name="SendingSuccessfulScreen"
+          component={SendingSuccessfulScreen}
+          options={{
+            animation: "slide_from_right",
+            headerStyle: { backgroundColor: COLORS.header },
+          }}
+        />
+        <Stack.Screen
+          name="SendingFailedScreen"
+          component={SendingFailedScreen}
           options={{
             animation: "slide_from_right",
             headerStyle: { backgroundColor: COLORS.header },

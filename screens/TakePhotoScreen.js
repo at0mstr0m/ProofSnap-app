@@ -16,7 +16,7 @@ import { generateHashes } from "../helpers/HashHelper";
 import { signHashes } from "../helpers/HttpHelper";
 import ImagePreview from "../components/ImagePreview";
 
-export default function TakePhotoScreen() {
+export default function TakePhotoScreen({ navigation }) {
   const [image, setImage] = useState(null);
   const [enteredTitle, setEnteredTitle] = useState("");
   const { width, height } = useWindowDimensions();
@@ -58,11 +58,10 @@ export default function TakePhotoScreen() {
       console.error("permission not granted");
       return;
     }
-    const asset = await createAssetAsync(image.uri);
-    console.log(image.base64.length);
-    const { sha256Hash, sha512Hash } = await generateHashes(image.base64);
-    const httpResponse = await signHashes(sha256Hash, sha512Hash);
-    console.log(httpResponse);
+    navigation.navigate("SendingScreen", {
+      image: image,
+      method: "sign",
+    });
   }
 
   // directly open camera when screen is called
