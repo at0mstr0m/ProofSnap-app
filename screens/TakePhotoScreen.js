@@ -9,11 +9,10 @@ import {
   Alert,
 } from "react-native";
 import COLORS from "../constants/colors";
+import { SHADOW } from "../constants/design";
 import { launchCameraAsync } from "expo-image-picker";
 import HomeScreenButtonWhite from "../components/HomeScreenButtonWhite";
-import { createAssetAsync, requestPermissionsAsync } from "expo-media-library";
-import { generateHashes } from "../helpers/HashHelper";
-import { signHashes } from "../helpers/HttpHelper";
+import { requestPermissionsAsync } from "expo-media-library";
 import ImagePreview from "../components/ImagePreview";
 
 export default function TakePhotoScreen({ navigation }) {
@@ -58,9 +57,19 @@ export default function TakePhotoScreen({ navigation }) {
       console.error("permission not granted");
       return;
     }
-    navigation.navigate("SendingScreen", {
-      image: image,
-      method: "sign",
+    // navigate to SendingScreen without the Possibility to go back and
+    // accidentally start signing multiple times
+    navigation.reset({
+      index: 0,
+      routes: [
+        {
+          name: "SendingScreen",
+          params: {
+            image: image,
+            method: "sign",
+          },
+        },
+      ],
     });
   }
 
@@ -69,7 +78,7 @@ export default function TakePhotoScreen({ navigation }) {
     takeImage();
   }, []);
 
-  if (image === null || image.cancelled === true) {
+  if (!image || image.cancelled === true) {
     return (
       <View style={styles.container}>
         <Text>TakePhotoScreen</Text>
@@ -101,14 +110,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   titleInput: {
+    ...SHADOW,
     backgroundColor: "white",
     borderRadius: 8,
-    overflow: Platform.OS === "android" ? "hidden" : null,
-    elevation: 5,
-    shadowColor: "#000000",
-    shadowOffset: { width: 1, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
     margin: 10,
     height: 50,
     padding: 12,

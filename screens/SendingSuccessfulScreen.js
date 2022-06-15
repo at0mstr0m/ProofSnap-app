@@ -11,7 +11,7 @@ export default function SendingSuccessfulScreen({ params }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.backgroundGreen,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",

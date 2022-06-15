@@ -11,7 +11,7 @@ export default function SendingFailedScreen({ params }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.backgroundRed,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",

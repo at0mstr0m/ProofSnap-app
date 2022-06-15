@@ -4,8 +4,9 @@ import COLORS from "../constants/colors";
 import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
 import { generateHashes } from "../helpers/HashHelper";
 import { verifyHashes } from "../helpers/HttpHelper";
+import ImagePreview from "../components/ImagePreview";
 
-export default function VerifyPhotoScreen({ params }) {
+export default function VerifyPhotoScreen({ navigation }) {
   const [image, setImage] = useState(null);
 
   async function selectImage() {
@@ -14,9 +15,9 @@ export default function VerifyPhotoScreen({ params }) {
       allowsEditing: false,
       base64: true,
       exif: true,
-      // quality: 0.01,
     });
-    console.log(newImage.exif);
+    if (newImage.cancelled) return;
+    console.log("newImage.exif", newImage.exif);
     // width and height are confused on iOS, so they have to be switched
     if (Platform.OS === "ios") {
       let height = newImage.height;
@@ -27,12 +28,24 @@ export default function VerifyPhotoScreen({ params }) {
   }
 
   async function checkSignature() {
-    const { sha256Hash, sha512Hash } = await generateHashes(image.base64);
-    const response = await verifyHashes(sha256Hash, sha512Hash);
-    console.log(response.data);
+    // const { sha256Hash, sha512Hash } = await generateHashes(image.base64);
+    // const response = await verifyHashes(sha256Hash, sha512Hash);
+    // console.log(response.data);
+    navigation.reset({
+      index: 0,
+      routes: [
+        {
+          name: "SendingScreen",
+          params: {
+            image: image,
+            method: "verify",
+          },
+        },
+      ],
+    });
   }
 
-  if (image === null || image.cancelled === true) {
+  if (!image || image.cancelled === true) {
     return (
       <View style={styles.container}>
         <Text>VerifyPhotoScreen</Text>
@@ -43,14 +56,15 @@ export default function VerifyPhotoScreen({ params }) {
 
   return (
     <View style={styles.container}>
-      <Image
+      {/* <Image
         style={styles.image}
         source={{
           uri: image.uri,
           width: image.height * 0.1,
           height: image.width * 0.1,
         }}
-      />
+      /> */}
+      <ImagePreview image={image} method="verify"/>
       <Button title="Check" onPress={checkSignature} />
     </View>
   );
