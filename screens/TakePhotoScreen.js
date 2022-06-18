@@ -63,10 +63,9 @@ export default function TakePhotoScreen({ navigation }) {
       index: 0,
       routes: [
         {
-          name: "SendingScreen",
+          name: "SignatureSendingScreen",
           params: {
             image: image,
-            method: "sign",
           },
         },
       ],

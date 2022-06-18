@@ -15,9 +15,12 @@ import LoginScreen from "./screens/LoginScreen";
 import TakePhotoScreen from "./screens/TakePhotoScreen";
 import VerifyPhotoScreen from "./screens/VerifyPhotoScreen";
 import AllPhotosScreen from "./screens/AllPhotosScreen";
-import SendingScreen from "./screens/SendingScreen";
-import SendingSuccessfulScreen from "./screens/SendingSuccessfulScreen";
-import SendingFailedScreen from "./screens/SendingFailedScreen";
+import SignatureSendingScreen from "./screens/SignatureSendingScreen";
+import SignatureSendingSuccessfulScreen from "./screens/SignatureSendingSuccessfulScreen";
+import SignatureSendingFailedScreen from "./screens/SignatureSendingFailedScreen";
+import VerificationSendingScreen from "./screens/VerificationSendingScreen";
+import VerificationSendingSuccessfulScreen from "./screens/VerificationSendingSuccessfulScreen";
+import VerificationSendingFailedScreen from "./screens/VerificationSendingFailedScreen";
 
 // https://reactnavigation.org/docs/hello-react-navigation#creating-a-native-stack-navigator
 const Stack = createNativeStackNavigator();
@@ -113,8 +116,8 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="SendingScreen"
-          component={SendingScreen}
+          name="SignatureSendingScreen"
+          component={SignatureSendingScreen}
           options={{
             animation: "slide_from_right",
             headerTitleAlign: "center",
@@ -126,16 +129,45 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="SendingSuccessfulScreen"
-          component={SendingSuccessfulScreen}
+          name="VerificationSendingScreen"
+          component={VerificationSendingScreen}
+          options={{
+            animation: "slide_from_right",
+            headerTitleAlign: "center",
+            headerStyle: { backgroundColor: COLORS.header },
+            // https://freakycoder.com/react-native-notes-28-how-to-prevent-go-back-with-react-navigation-v6-f214c45f6315
+            gestureEnabled: false,
+            headerBackVisible: false,
+            headerLeft: () => <></>,
+          }}
+        />
+        <Stack.Screen
+          name="SignatureSendingSuccessfulScreen"
+          component={SignatureSendingSuccessfulScreen}
           options={{
             animation: "slide_from_right",
             headerStyle: { backgroundColor: COLORS.header },
           }}
         />
         <Stack.Screen
-          name="SendingFailedScreen"
-          component={SendingFailedScreen}
+          name="SignatureSendingFailedScreen"
+          component={SignatureSendingFailedScreen}
+          options={{
+            animation: "slide_from_right",
+            headerStyle: { backgroundColor: COLORS.header },
+          }}
+        />
+        <Stack.Screen
+          name="VerificationSendingSuccessfulScreen"
+          component={VerificationSendingSuccessfulScreen}
+          options={{
+            animation: "slide_from_right",
+            headerStyle: { backgroundColor: COLORS.header },
+          }}
+        />
+        <Stack.Screen
+          name="VerificationSendingFailedScreen"
+          component={VerificationSendingFailedScreen}
           options={{
             animation: "slide_from_right",
             headerStyle: { backgroundColor: COLORS.header },

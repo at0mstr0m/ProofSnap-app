@@ -35,10 +35,9 @@ export default function VerifyPhotoScreen({ navigation }) {
       index: 0,
       routes: [
         {
-          name: "SendingScreen",
+          name: "VerificationSendingScreen",
           params: {
             image: image,
-            method: "verify",
           },
         },
       ],
@@ -56,14 +55,6 @@ export default function VerifyPhotoScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* <Image
-        style={styles.image}
-        source={{
-          uri: image.uri,
-          width: image.height * 0.1,
-          height: image.width * 0.1,
-        }}
-      /> */}
       <ImagePreview image={image} method="verify"/>
       <Button title="Check" onPress={checkSignature} />
     </View>

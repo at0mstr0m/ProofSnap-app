@@ -1,10 +1,10 @@
 import { StyleSheet, View, Text } from "react-native";
 import COLORS from "../constants/colors";
 
-export default function SendingFailedScreen({ params }) {
+export default function VerificationSendingFailedScreen() {
   return (
     <View style={styles.container}>
-      <Text>SendingFailedScreen</Text>
+      <Text>VerificationSendingFailedScreen</Text>
     </View>
   );
 }
