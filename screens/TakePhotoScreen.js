@@ -8,6 +8,7 @@ import {
   useWindowDimensions,
   Alert,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import COLORS from "../constants/colors";
 import { SHADOW } from "../constants/design";
 import { launchCameraAsync } from "expo-image-picker";
@@ -66,6 +67,7 @@ export default function TakePhotoScreen({ navigation }) {
           name: "SignatureSendingScreen",
           params: {
             image: image,
+            title: enteredTitle.trim(), // remove unnecessary spaces at the end of the title that could be added by auto completion
           },
         },
       ],
@@ -86,18 +88,30 @@ export default function TakePhotoScreen({ navigation }) {
   }
 
   return (
+    // https://stackoverflow.com/a/57730773
     <View style={[styles.container]}>
-      <ImagePreview image={image} />
-      <TextInput
-        style={[styles.titleInput, { width: (width * 3) / 4 }]}
-        maxLength={100}
-        placeholder="Titel"
-        onChangeText={titleInputHandler}
-        value={enteredTitle}
-      />
-      <HomeScreenButtonWhite iconName="send" onPress={onSendButtonPressed}>
-        Signatur erstellen
-      </HomeScreenButtonWhite>
+      {/* https://github.com/APSL/react-native-keyboard-aware-scroll-view */}
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false} // https://reactnative.dev/docs/scrollview#showsverticalscrollindicator
+        // disable scrolling effects on all platforms
+        bounces={false} // https://reactnative.dev/docs/scrollview#bounces-ios
+        overScrollMode={"never"} // https://reactnative.dev/docs/scrollview.html#overscrollmode-android
+        contentContainerStyle={{
+          alignItems: "center",
+        }}
+      >
+        <ImagePreview image={image} />
+        <TextInput
+          style={[styles.titleInput, { width: (width * 3) / 4 }]}
+          maxLength={100}
+          placeholder="Titel"
+          onChangeText={titleInputHandler}
+          value={enteredTitle}
+        />
+        <HomeScreenButtonWhite iconName="send" onPress={onSendButtonPressed}>
+          Signatur erstellen
+        </HomeScreenButtonWhite>
+      </KeyboardAwareScrollView>
     </View>
   );
 }

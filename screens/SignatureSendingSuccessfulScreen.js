@@ -1,10 +1,31 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 import COLORS from "../constants/colors";
+import ImagePreview from "../components/ImagePreview";
+import SignatureData from "../components/SignatureData";
 
-export default function SignatureSendingSuccessfulScreen() {
+export default function SignatureSendingSuccessfulScreen({ route }) {
+  const result = route.params.result;
+  const image = route.params.image;
+  const title = route.params.title;
+
   return (
     <View style={styles.container}>
-      <Text>SendingSuccessfulScreen</Text>
+      <ScrollView
+        showsVerticalScrollIndicator={false} // disable scrolling effects on all platforms
+        bounces={false} // https://reactnative.dev/docs/scrollview#bounces-ios
+        overScrollMode={"never"} // https://reactnative.dev/docs/scrollview.html#overscrollmode-android
+        contentContainerStyle={{
+          alignItems: "center",
+        }}
+      >
+        <Text>SendingSuccessfulScreen</Text>
+        <Text>Title: {title}</Text>
+        <ImagePreview image={image} />
+        <SignatureData
+          publicKey={result.public_key}
+          signature={result.signature}
+        />
+      </ScrollView>
     </View>
   );
 }

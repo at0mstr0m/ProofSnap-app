@@ -4,7 +4,11 @@ import { calculateImageDimensions } from "../helpers/ImageHelper";
 
 export default function ImagePreview({ image, method }) {
   const { width, height } = useWindowDimensions();
-  const { imageWidth, imageHeight } = calculateImageDimensions(width, image, method);
+  const { imageWidth, imageHeight } = calculateImageDimensions(
+    width,
+    image,
+    method
+  );
   return (
     <View style={styles.container}>
       <Image

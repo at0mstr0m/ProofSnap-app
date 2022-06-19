@@ -4,9 +4,11 @@ import COLORS from "../constants/colors";
 import { createAssetAsync } from "expo-media-library";
 import { generateHashes } from "../helpers/HashHelper";
 import { signHashes, verifyHashes } from "../helpers/HttpHelper";
+import ImagePreview from "../components/ImagePreview";
 
 export default function SignatureSendingScreen({ navigation, route }) {
   const image = route.params.image;
+  const title = route.params.title;
   const [result, setResult] = useState(null);
 
   async function sendData() {
@@ -41,7 +43,10 @@ export default function SignatureSendingScreen({ navigation, route }) {
           index: 1,
           routes: [
             { name: "HomeScreen" },
-            { name: "SignatureSendingFailedScreen" },
+            {
+              name: "SignatureSendingFailedScreen",
+              params: { image: image, title: title },
+            },
           ],
         });
       } else {
@@ -51,7 +56,7 @@ export default function SignatureSendingScreen({ navigation, route }) {
             { name: "HomeScreen" },
             {
               name: "SignatureSendingSuccessfulScreen",
-              params: { result: result },
+              params: { image: image, result: result, title: title },
             },
           ],
         });
@@ -78,6 +83,8 @@ export default function SignatureSendingScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       <Text>SignatureSendingScreen</Text>
+      <Text>Title: {title}</Text>
+      <ImagePreview image={image} />
     </View>
   );
 }
