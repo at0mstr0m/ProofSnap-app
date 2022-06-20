@@ -1,13 +1,25 @@
 import { useState } from "react";
-import { StyleSheet, View, Text, Button, Image, Platform } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  Image,
+  Platform,
+  Pressable,
+} from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import COLORS from "../constants/colors";
 import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
-import { generateHashes } from "../helpers/HashHelper";
-import { verifyHashes } from "../helpers/HttpHelper";
 import ImagePreview from "../components/ImagePreview";
+import ImagePreviewPlaceholder from "../components/ImagePreviewPlaceholder";
+import HomeScreenButtonWhite from "../components/HomeScreenButtonWhite";
+import SignatureDataInput from "../components/SignatureDataInput";
 
 export default function VerifyPhotoScreen({ navigation }) {
   const [image, setImage] = useState(null);
+  const [publicKey, setPublicKey] = useState("");
+  const [signature, setSignature] = useState("");
 
   async function selectImage() {
     const newImage = await launchImageLibraryAsync({
@@ -25,6 +37,10 @@ export default function VerifyPhotoScreen({ navigation }) {
       newImage.width = height;
     }
     setImage(newImage);
+  }
+
+  function openQRCodeScanner() {
+    console.log("openQRCodeScanner");
   }
 
   async function checkSignature() {
@@ -47,16 +63,43 @@ export default function VerifyPhotoScreen({ navigation }) {
   if (!image || image.cancelled === true) {
     return (
       <View style={styles.container}>
-        <Text>VerifyPhotoScreen</Text>
-        <Button title="Pick" onPress={selectImage} />
+        <Pressable onPress={selectImage}>
+          <ImagePreviewPlaceholder />
+        </Pressable>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <ImagePreview image={image} method="verify"/>
-      <Button title="Check" onPress={checkSignature} />
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false} // https://reactnative.dev/docs/scrollview#showsverticalscrollindicator
+        // disable scrolling effects on all platforms
+        bounces={false} // https://reactnative.dev/docs/scrollview#bounces-ios
+        overScrollMode={"never"} // https://reactnative.dev/docs/scrollview.html#overscrollmode-android
+        contentContainerStyle={styles.scrollView}
+      >
+        <Pressable onPress={selectImage}>
+          <ImagePreview image={image} method="verify" />
+        </Pressable>
+        <HomeScreenButtonWhite
+          onPress={openQRCodeScanner}
+          iconName="qr"
+          title="QR-Code scannen"
+        />
+        <SignatureDataInput
+          publicKey={publicKey}
+          setPublicKey={setPublicKey}
+          signature={signature}
+          setSignature={setSignature}
+        />
+        <HomeScreenButtonWhite
+          onPress={checkSignature}
+          iconName="check"
+          title="Verifizieren"
+          style={styles.button}
+        />
+      </KeyboardAwareScrollView>
     </View>
   );
 }
@@ -68,7 +111,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  scrollView: { alignItems: "center" },
   image: {
     // marginBottom: 50,
+  },
+  button: {
+    marginBottom: 20,
   },
 });

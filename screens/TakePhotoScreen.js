@@ -7,6 +7,7 @@ import {
   TextInput,
   useWindowDimensions,
   Alert,
+  Pressable,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import COLORS from "../constants/colors";
@@ -96,11 +97,11 @@ export default function TakePhotoScreen({ navigation }) {
         // disable scrolling effects on all platforms
         bounces={false} // https://reactnative.dev/docs/scrollview#bounces-ios
         overScrollMode={"never"} // https://reactnative.dev/docs/scrollview.html#overscrollmode-android
-        contentContainerStyle={{
-          alignItems: "center",
-        }}
+        contentContainerStyle={styles.scrollView}
       >
-        <ImagePreview image={image} />
+        <Pressable onPress={takeImage}>
+          <ImagePreview image={image} />
+        </Pressable>
         <TextInput
           style={[styles.titleInput, { width: (width * 3) / 4 }]}
           maxLength={100}
@@ -108,9 +109,11 @@ export default function TakePhotoScreen({ navigation }) {
           onChangeText={titleInputHandler}
           value={enteredTitle}
         />
-        <HomeScreenButtonWhite iconName="send" onPress={onSendButtonPressed}>
-          Signatur erstellen
-        </HomeScreenButtonWhite>
+        <HomeScreenButtonWhite
+          iconName="send"
+          onPress={onSendButtonPressed}
+          title="Signatur erstellen"
+        />
       </KeyboardAwareScrollView>
     </View>
   );
@@ -120,6 +123,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.background,
     flex: 1,
+    alignItems: "center",
+  },
+  scrollView: {
     alignItems: "center",
   },
   titleInput: {

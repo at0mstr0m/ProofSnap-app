@@ -7,10 +7,17 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { Foundation } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import COLORS from "../constants/colors";
 import { SHADOW, BORDER_RADIUS, ICON_SIZE } from "../constants/design";
 
-export default function HomeScreenButtonWhite({ children, onPress, iconName }) {
+export default function HomeScreenButtonWhite({
+  title,
+  onPress,
+  iconName,
+  style,
+}) {
   const { width, height } = useWindowDimensions();
   let icon;
   switch (iconName) {
@@ -38,13 +45,26 @@ export default function HomeScreenButtonWhite({ children, onPress, iconName }) {
         />
       );
       break;
+    case "qr":
+      icon = (
+        <MaterialCommunityIcons
+          name="qrcode"
+          size={ICON_SIZE}
+          color={COLORS.buttonText}
+        />
+      );
+      break;
     default:
-      icon = null;
+      icon = (
+        <AntDesign name="frown" size={ICON_SIZE} color={COLORS.buttonText} />
+      );
       break;
   }
 
   return (
-    <View style={[styles.buttonOuterContainer, { width: (width * 3) / 4 }]}>
+    <View
+      style={[styles.buttonOuterContainer, { width: (width * 3) / 4 }, style]}
+    >
       <Pressable
         style={({ pressed }) =>
           pressed
@@ -55,7 +75,7 @@ export default function HomeScreenButtonWhite({ children, onPress, iconName }) {
         android_ripple={{ color: "grey" }}
       >
         <View style={styles.iconContainer}>{icon}</View>
-        <Text style={styles.buttonText}>{children}</Text>
+        <Text style={styles.buttonText}>{title}</Text>
       </Pressable>
     </View>
   );

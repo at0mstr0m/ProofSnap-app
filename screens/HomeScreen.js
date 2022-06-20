@@ -25,12 +25,17 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Logo />
-      <HomeScreenButtonWhite iconName="camera" onPress={onTakePhotoPressed}>
-        Foto aufnehmen
-      </HomeScreenButtonWhite>
-      <HomeScreenButtonWhite iconName="check" onPress={onVerifyPhotoPressed}>
-        Foto verifizieren
-      </HomeScreenButtonWhite>
+      <HomeScreenButtonWhite
+        iconName="camera"
+        onPress={onTakePhotoPressed}
+        title="Foto aufnehmen"
+      />
+      <HomeScreenButtonWhite
+        iconName="check"
+        onPress={onVerifyPhotoPressed}
+        title="Foto verifizieren"
+      />
+
       <View style={[styles.doubleButtons, { maxWidth: (width * 3) / 4 }]}>
         <HomeScreenButtonGradient
           onPress={onAboutButtonPressed}
@@ -49,9 +54,11 @@ export default function HomeScreen({ navigation }) {
           Login
         </HomeScreenButtonGradient>
       </View>
-      <HomeScreenButtonWhite iconName="photo" onPress={onAllPhotosPressed}>
-        Alle Aufnahmen
-      </HomeScreenButtonWhite>
+      <HomeScreenButtonWhite
+        iconName="photo"
+        onPress={onAllPhotosPressed}
+        title="Alle Aufnahmen"
+      />
     </View>
   );
 }
