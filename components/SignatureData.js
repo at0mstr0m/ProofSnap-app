@@ -2,7 +2,7 @@ import { StyleSheet, View, Text, useWindowDimensions } from "react-native";
 import COLORS from "../constants/colors";
 import { SHADOW, BORDER_RADIUS } from "../constants/design";
 import CopyButton from "./CopyButton";
-import * as Clipboard from 'expo-clipboard';
+import * as Clipboard from "expo-clipboard";
 
 const MARGIN = 12;
 
@@ -21,10 +21,10 @@ export default function SignatureData({ publicKey, signature }) {
   return (
     <View style={[styles.container, { width: (width * 3) / 4 }]}>
       <View style={styles.topContainer}>
-        <Text style={styles.title}>PUBLIC KEY</Text>
+        <Text style={[styles.title, { marginTop: MARGIN * 2 }]}>PUBLIC KEY</Text>
         <CopyButton onPress={copyToClipboard} />
       </View>
-      <View style={[styles.textContainer, { marginBottom: MARGIN }]}>
+      <View style={[styles.textContainer, { marginBottom: 0 }]}>
         <Text style={styles.text} numberOfLines={1}>
           {publicKey}
         </Text>
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // justifyContent: "center",
     borderRadius: BORDER_RADIUS,
-    padding: MARGIN,
+    // padding: MARGIN,
     margin: MARGIN,
     marginBottom: MARGIN * 2, // avoids shadow being cut of by parent ScrollView
   },
@@ -59,11 +59,15 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     marginBottom: MARGIN / 2,
     color: "white",
+    marginLeft: MARGIN,
+    marginTop: MARGIN,
   },
   textContainer: {
     backgroundColor: "white",
     borderRadius: BORDER_RADIUS,
     padding: (MARGIN * 2) / 3,
+    margin: MARGIN,
+    marginTop: 0,
   },
   text: {
     fontFamily: "Montserrat_400Regular",
