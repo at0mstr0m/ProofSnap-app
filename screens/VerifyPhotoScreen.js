@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Platform,
-  Pressable,
-} from "react-native";
+import { StyleSheet, View, Platform, Pressable } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import COLORS from "../constants/colors";
 import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
@@ -51,6 +46,8 @@ export default function VerifyPhotoScreen({ navigation }) {
           name: "VerificationSendingScreen",
           params: {
             image: image,
+            publicKey: publicKey,
+            signature: signature,
           },
         },
       ],

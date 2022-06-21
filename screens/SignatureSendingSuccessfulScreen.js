@@ -1,9 +1,18 @@
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  useWindowDimensions,
+} from "react-native";
 import COLORS from "../constants/colors";
 import ImagePreview from "../components/ImagePreview";
 import SignatureData from "../components/SignatureData";
+import QRCode from "react-native-qrcode-svg";
+import { SHADOW } from "../constants/design";
 
 export default function SignatureSendingSuccessfulScreen({ route }) {
+  const { width, height } = useWindowDimensions();
   const result = route.params.result;
   const image = route.params.image;
   const title = route.params.title;
@@ -25,6 +34,15 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
           publicKey={result.public_key}
           signature={result.signature}
         />
+        <View style={styles.qrCode}>
+          <QRCode
+            value={JSON.stringify({
+              public_key: result.public_key,
+              signature: result.signature,
+            })}
+            size={(width * 3) / 4}
+          />
+        </View>
       </ScrollView>
     </View>
   );
@@ -36,5 +54,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  qrCode: {
+    ...SHADOW,
+    marginBottom: 40,
   },
 });

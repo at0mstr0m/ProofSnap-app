@@ -7,14 +7,21 @@ import { signHashes, verifyHashes } from "../helpers/HttpHelper";
 
 export default function VerificationSendingScreen({ navigation, route }) {
   const image = route.params.image;
+  const publicKey = route.params.publicKey;
+  const signature = route.params.signature;
   const [result, setResult] = useState(null);
 
   async function sendData() {
     const asset = await createAssetAsync(image.uri);
     console.log(image.base64.length);
     const { sha256Hash, sha512Hash } = await generateHashes(image.base64);
-    
-    const httpResponse = await verifyHashes(sha256Hash, sha512Hash);
+
+    const httpResponse = await verifyHashes(
+      sha256Hash,
+      sha512Hash,
+      publicKey,
+      signature
+    );
     if (!httpResponse) {
       setResult("failed");
     } else if (
@@ -44,7 +51,10 @@ export default function VerificationSendingScreen({ navigation, route }) {
           index: 1,
           routes: [
             { name: "HomeScreen" },
-            { name: "VerificationSendingFailedScreen" },
+            {
+              name: "VerificationSendingFailedScreen",
+              params: { result: result },
+            },
           ],
         });
       } else {
