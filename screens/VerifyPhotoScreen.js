@@ -2,9 +2,6 @@ import { useState } from "react";
 import {
   StyleSheet,
   View,
-  Text,
-  Button,
-  Image,
   Platform,
   Pressable,
 } from "react-native";
@@ -13,7 +10,7 @@ import COLORS from "../constants/colors";
 import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
 import ImagePreview from "../components/ImagePreview";
 import ImagePreviewPlaceholder from "../components/ImagePreviewPlaceholder";
-import HomeScreenButtonWhite from "../components/HomeScreenButtonWhite";
+import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import SignatureDataInput from "../components/SignatureDataInput";
 
 export default function VerifyPhotoScreen({ navigation }) {

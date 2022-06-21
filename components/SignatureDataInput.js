@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import COLORS from "../constants/colors";
 import { SHADOW, BORDER_RADIUS } from "../constants/design";
-import PasteButton from "./PasteButton";
+import PasteButton from "./Buttons/PasteButton";
 import * as Clipboard from "expo-clipboard";
 
 const MARGIN = 12;

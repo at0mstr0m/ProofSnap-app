@@ -13,7 +13,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import COLORS from "../constants/colors";
 import { SHADOW } from "../constants/design";
 import { launchCameraAsync } from "expo-image-picker";
-import HomeScreenButtonWhite from "../components/HomeScreenButtonWhite";
+import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import { requestPermissionsAsync } from "expo-media-library";
 import ImagePreview from "../components/ImagePreview";
 

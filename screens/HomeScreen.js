@@ -1,6 +1,6 @@
 import { StyleSheet, View, useWindowDimensions } from "react-native";
-import HomeScreenButtonGradient from "../components/HomeScreenButtonGradient";
-import HomeScreenButtonWhite from "../components/HomeScreenButtonWhite";
+import HomeScreenButtonGradient from "../components/Buttons/HomeScreenButtonGradient";
+import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import Logo from "../components/Logo";
 import COLORS from "../constants/colors";
 

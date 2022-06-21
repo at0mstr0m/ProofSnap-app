@@ -9,8 +9,8 @@ import {
 import { Foundation } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import COLORS from "../constants/colors";
-import { SHADOW, BORDER_RADIUS, ICON_SIZE } from "../constants/design";
+import COLORS from "../../constants/colors";
+import { SHADOW, BORDER_RADIUS, ICON_SIZE } from "../../constants/design";
 
 export default function HomeScreenButtonWhite({
   title,

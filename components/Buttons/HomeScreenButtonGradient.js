@@ -6,7 +6,7 @@ import {
   Platform,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { SHADOW, BORDER_RADIUS } from "../constants/design";
+import { SHADOW, BORDER_RADIUS } from "../../constants/design";
 
 export default function HomeScreenButtonGradient({
   children,

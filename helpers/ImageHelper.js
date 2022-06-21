@@ -1,7 +1,12 @@
 import { Platform } from "react-native";
 
 // https://sirv.com/help/articles/rotate-photos-to-be-upright/
-export function getOrientation(orientation, pixelXDimension, pixelYDimension, method) {
+export function getOrientation(
+  orientation,
+  pixelXDimension,
+  pixelYDimension,
+  method
+) {
   // console.log("orientation", orientation);
   // Of course iOS is a special snowflake that simply ignores the EXIF
   // orientation value when loading an image from the device's image library

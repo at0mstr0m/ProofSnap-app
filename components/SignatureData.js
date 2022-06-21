@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, useWindowDimensions } from "react-native";
 import COLORS from "../constants/colors";
 import { SHADOW, BORDER_RADIUS } from "../constants/design";
-import CopyButton from "./CopyButton";
+import CopyButton from "./Buttons/CopyButton";
 import * as Clipboard from "expo-clipboard";
 
 const MARGIN = 12;
