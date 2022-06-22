@@ -12,7 +12,10 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import COLORS from "../constants/colors";
 import { SHADOW } from "../constants/design";
-import { launchCameraAsync } from "expo-image-picker";
+import {
+  requestCameraPermissionsAsync,
+  launchCameraAsync,
+} from "expo-image-picker";
 import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import { requestPermissionsAsync } from "expo-media-library";
 import ImagePreview from "../components/ImagePreview";
@@ -27,6 +30,11 @@ export default function TakePhotoScreen({ navigation }) {
   }
 
   async function takeImage() {
+    const cameraPermissionResponse = await requestCameraPermissionsAsync();
+    if (!cameraPermissionResponse.granted) {
+      console.error("permission not granted");
+      return;
+    }
     const newImage = await launchCameraAsync({
       allowsEditing: false,
       base64: true,
@@ -54,8 +62,8 @@ export default function TakePhotoScreen({ navigation }) {
       ]);
       return;
     }
-    const permissionResponse = await requestPermissionsAsync();
-    if (!permissionResponse.granted) {
+    const mediaLibraryPermissionResponse = await requestPermissionsAsync();
+    if (!mediaLibraryPermissionResponse.granted) {
       console.error("permission not granted");
       return;
     }
@@ -113,6 +121,7 @@ export default function TakePhotoScreen({ navigation }) {
           iconName="send"
           onPress={onSendButtonPressed}
           title="Signatur erstellen"
+          style={styles.button}
         />
       </KeyboardAwareScrollView>
     </View>
@@ -138,5 +147,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "Montserrat_400Regular",
     color: COLORS.buttonText,
+  },
+  button: {
+    margin: 20,
   },
 });

@@ -7,6 +7,7 @@ import ImagePreview from "../components/ImagePreview";
 import ImagePreviewPlaceholder from "../components/ImagePreviewPlaceholder";
 import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import SignatureDataInput from "../components/SignatureDataInput";
+import { requestPermissionsAsync } from "expo-media-library";
 
 export default function VerifyPhotoScreen({ navigation }) {
   const [image, setImage] = useState(null);
@@ -14,6 +15,11 @@ export default function VerifyPhotoScreen({ navigation }) {
   const [signature, setSignature] = useState("");
 
   async function selectImage() {
+    const mediaLibraryPermissionResponse = await requestPermissionsAsync();
+    if (!mediaLibraryPermissionResponse.granted) {
+      console.error("permission not granted");
+      return;
+    }
     const newImage = await launchImageLibraryAsync({
       mediaTypes: MediaTypeOptions.Images,
       allowsEditing: false,
