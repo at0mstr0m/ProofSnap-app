@@ -19,6 +19,7 @@ import {
 import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import { requestPermissionsAsync } from "expo-media-library";
 import ImagePreview from "../components/ImagePreview";
+import ImagePreviewPlaceholder from "../components/ImagePreviewPlaceholder";
 
 export default function TakePhotoScreen({ navigation }) {
   const [image, setImage] = useState(null);
@@ -88,13 +89,12 @@ export default function TakePhotoScreen({ navigation }) {
     takeImage();
   }, []);
 
-  if (!image || image.cancelled === true) {
-    return (
-      <View style={styles.container}>
-        <Text>TakePhotoScreen</Text>
-      </View>
+  const imagePreview =
+    !image || image.cancelled === true ? (
+      <ImagePreviewPlaceholder onPress={takeImage} />
+    ) : (
+      <ImagePreview image={image} onPress={takeImage} />
     );
-  }
 
   return (
     // https://stackoverflow.com/a/57730773
@@ -107,9 +107,7 @@ export default function TakePhotoScreen({ navigation }) {
         overScrollMode={"never"} // https://reactnative.dev/docs/scrollview.html#overscrollmode-android
         contentContainerStyle={styles.scrollView}
       >
-        <Pressable onPress={takeImage}>
-          <ImagePreview image={image} />
-        </Pressable>
+        {imagePreview}
         <TextInput
           style={[styles.titleInput, { width: (width * 3) / 4 }]}
           maxLength={100}

@@ -120,6 +120,7 @@ export default function App() {
           component={SignatureSendingScreen}
           options={{
             animation: "slide_from_right",
+            title: "Signatur wird erstellt...",
             headerTitleAlign: "center",
             headerStyle: { backgroundColor: COLORS.header },
             // https://freakycoder.com/react-native-notes-28-how-to-prevent-go-back-with-react-navigation-v6-f214c45f6315
@@ -134,6 +135,7 @@ export default function App() {
           options={{
             animation: "slide_from_right",
             headerTitleAlign: "center",
+            title: "Signatur wird überprüft...",
             headerStyle: { backgroundColor: COLORS.header },
             // https://freakycoder.com/react-native-notes-28-how-to-prevent-go-back-with-react-navigation-v6-f214c45f6315
             gestureEnabled: false,
@@ -146,6 +148,7 @@ export default function App() {
           component={SignatureSendingSuccessfulScreen}
           options={{
             animation: "slide_from_right",
+            title: "Signatur erstellt",
             headerStyle: { backgroundColor: COLORS.header },
           }}
         />
@@ -154,6 +157,7 @@ export default function App() {
           component={SignatureSendingFailedScreen}
           options={{
             animation: "slide_from_right",
+            title: "Signatur erstellen gescheitert",
             headerStyle: { backgroundColor: COLORS.header },
           }}
         />
@@ -162,6 +166,7 @@ export default function App() {
           component={VerificationSendingSuccessfulScreen}
           options={{
             animation: "slide_from_right",
+            title: "Signatur überprüft",
             headerStyle: { backgroundColor: COLORS.header },
           }}
         />
@@ -170,6 +175,7 @@ export default function App() {
           component={VerificationSendingFailedScreen}
           options={{
             animation: "slide_from_right",
+            title: "Signatur überprüfen gescheitert",
             headerStyle: { backgroundColor: COLORS.header },
           }}
         />

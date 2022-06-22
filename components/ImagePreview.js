@@ -1,8 +1,14 @@
-import { StyleSheet, Image, useWindowDimensions, View } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  useWindowDimensions,
+  View,
+  Pressable,
+} from "react-native";
 import { SHADOW, BORDER_RADIUS } from "../constants/design";
 import { calculateImageDimensions } from "../helpers/ImageHelper";
 
-export default function ImagePreview({ image, method }) {
+export default function ImagePreview({ image, method, onPress }) {
   const { width, height } = useWindowDimensions();
   const { imageWidth, imageHeight } = calculateImageDimensions(
     width,
@@ -11,14 +17,16 @@ export default function ImagePreview({ image, method }) {
   );
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={{
-          uri: image.uri,
-          width: imageWidth,
-          height: imageHeight,
-        }}
-      />
+      <Pressable onPress={onPress}>
+        <Image
+          style={styles.image}
+          source={{
+            uri: image.uri,
+            width: imageWidth,
+            height: imageHeight,
+          }}
+        />
+      </Pressable>
     </View>
   );
 }

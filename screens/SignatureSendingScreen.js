@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, Text, Alert } from "react-native";
+import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import COLORS from "../constants/colors";
 import { createAssetAsync } from "expo-media-library";
 import { generateHashes } from "../helpers/HashHelper";
-import { signHashes, verifyHashes } from "../helpers/HttpHelper";
+import { signHashes } from "../helpers/HttpHelper";
 import ImagePreview from "../components/ImagePreview";
 
 export default function SignatureSendingScreen({ navigation, route }) {
@@ -45,7 +45,10 @@ export default function SignatureSendingScreen({ navigation, route }) {
             { name: "HomeScreen" },
             {
               name: "SignatureSendingFailedScreen",
-              params: { image: image, title: title },
+              params: {
+                image: image,
+                title: title,
+              },
             },
           ],
         });
@@ -56,7 +59,11 @@ export default function SignatureSendingScreen({ navigation, route }) {
             { name: "HomeScreen" },
             {
               name: "SignatureSendingSuccessfulScreen",
-              params: { image: image, result: result, title: title },
+              params: {
+                image: image,
+                result: result,
+                title: title,
+              },
             },
           ],
         });
@@ -83,6 +90,7 @@ export default function SignatureSendingScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       <Text>SignatureSendingScreen</Text>
+      <ActivityIndicator size="large" color={COLORS.buttonText} />
       <Text>Title: {title}</Text>
       <ImagePreview image={image} />
     </View>

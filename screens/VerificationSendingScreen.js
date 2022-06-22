@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, Text, Alert } from "react-native";
+import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import COLORS from "../constants/colors";
 import { createAssetAsync } from "expo-media-library";
 import { generateHashes } from "../helpers/HashHelper";
-import { signHashes, verifyHashes } from "../helpers/HttpHelper";
+import { verifyHashes } from "../helpers/HttpHelper";
+import ImagePreview from "../components/ImagePreview";
 
 export default function VerificationSendingScreen({ navigation, route }) {
   const image = route.params.image;
@@ -91,6 +92,8 @@ export default function VerificationSendingScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       <Text>VerificationSendingScreen</Text>
+      <ActivityIndicator size="large" color={COLORS.buttonText} />
+      <ImagePreview image={image} />
     </View>
   );
 }

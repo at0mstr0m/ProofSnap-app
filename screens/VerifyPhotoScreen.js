@@ -60,15 +60,12 @@ export default function VerifyPhotoScreen({ navigation }) {
     });
   }
 
-  if (!image || image.cancelled === true) {
-    return (
-      <View style={styles.container}>
-        <Pressable onPress={selectImage}>
-          <ImagePreviewPlaceholder />
-        </Pressable>
-      </View>
+  const imagePreview =
+    !image || image.cancelled === true ? (
+      <ImagePreviewPlaceholder onPress={selectImage} />
+    ) : (
+      <ImagePreview image={image} method="verify" onPress={selectImage} />
     );
-  }
 
   return (
     <View style={styles.container}>
@@ -79,9 +76,7 @@ export default function VerifyPhotoScreen({ navigation }) {
         overScrollMode={"never"} // https://reactnative.dev/docs/scrollview.html#overscrollmode-android
         contentContainerStyle={styles.scrollView}
       >
-        <Pressable onPress={selectImage}>
-          <ImagePreview image={image} method="verify" />
-        </Pressable>
+        {imagePreview}
         <HomeScreenButtonWhite
           onPress={openQRCodeScanner}
           iconName="qr"
