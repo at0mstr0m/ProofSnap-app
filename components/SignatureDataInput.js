@@ -10,10 +10,12 @@ import COLORS from "../constants/colors";
 import { SHADOW, BORDER_RADIUS } from "../constants/design";
 import PasteButton from "./Buttons/PasteButton";
 import * as Clipboard from "expo-clipboard";
+import {
+  isPossibleKey,
+  KEY_LENGTH,
+} from "../helpers/SignatureDataVerificationHelper";
 
 const MARGIN = 12;
-const PUBLIC_KEY_LENGTH = 264;
-const SIGNATURE_LENGTH = PUBLIC_KEY_LENGTH;
 
 export default function SignatureDataInput({
   publicKey,
@@ -40,8 +42,8 @@ export default function SignatureDataInput({
       // only fill TextInput fields if the keys hav a valid length and
       // contain only hexadecimal characters 0-9 and a-f
       if (
-        signatureData?.public_key.length === PUBLIC_KEY_LENGTH &&
-        signatureData?.signature.length === SIGNATURE_LENGTH
+        isPossibleKey(signatureData?.public_key) &&
+        isPossibleKey(signatureData?.signature)
       ) {
         setPublicKey(signatureData.public_key);
         setSignature(signatureData.signature);
@@ -65,7 +67,7 @@ export default function SignatureDataInput({
           numberOfLines={1}
           placeholder="PUBLIC KEY"
           placeholderTextColor={COLORS.header}
-          maxLength={PUBLIC_KEY_LENGTH}
+          maxLength={KEY_LENGTH}
           onChangeText={publicKeyInputHandler}
           value={publicKey}
         />
@@ -77,7 +79,7 @@ export default function SignatureDataInput({
           numberOfLines={1}
           placeholder="SIGNATUR"
           placeholderTextColor={COLORS.header}
-          maxLength={SIGNATURE_LENGTH}
+          maxLength={KEY_LENGTH}
           onChangeText={signatureInputHandler}
           value={signature}
         />

@@ -21,7 +21,9 @@ export default function SignatureData({ publicKey, signature }) {
   return (
     <View style={[styles.container, { width: (width * 3) / 4 }]}>
       <View style={styles.topContainer}>
-        <Text style={[styles.title, { marginTop: MARGIN * 2 }]}>PUBLIC KEY</Text>
+        <Text style={[styles.title, { marginTop: MARGIN * 2 }]}>
+          PUBLIC KEY
+        </Text>
         <CopyButton onPress={copyToClipboard} />
       </View>
       <View style={[styles.textContainer, { marginBottom: 0 }]}>
@@ -43,10 +45,7 @@ const styles = StyleSheet.create({
   container: {
     ...SHADOW,
     backgroundColor: COLORS.element,
-    // alignItems: "center",
-    // justifyContent: "center",
     borderRadius: BORDER_RADIUS,
-    // padding: MARGIN,
     margin: MARGIN,
     marginBottom: MARGIN * 2, // avoids shadow being cut of by parent ScrollView
   },

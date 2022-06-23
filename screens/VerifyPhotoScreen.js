@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { StyleSheet, View, Platform, Pressable } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Platform,
+  useWindowDimensions,
+  Pressable,
+  Alert,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import COLORS from "../constants/colors";
 import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
@@ -8,11 +15,16 @@ import ImagePreviewPlaceholder from "../components/ImagePreviewPlaceholder";
 import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import SignatureDataInput from "../components/SignatureDataInput";
 import { requestPermissionsAsync } from "expo-media-library";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import { verifySignatureData } from "../helpers/SignatureDataVerificationHelper";
 
 export default function VerifyPhotoScreen({ navigation }) {
   const [image, setImage] = useState(null);
   const [publicKey, setPublicKey] = useState("");
   const [signature, setSignature] = useState("");
+  const [scanned, setScanned] = useState(false);
+  const [scannerActivated, setScannerActivated] = useState(false);
+  const { width, height } = useWindowDimensions();
 
   async function selectImage() {
     const mediaLibraryPermissionResponse = await requestPermissionsAsync();
@@ -38,13 +50,10 @@ export default function VerifyPhotoScreen({ navigation }) {
   }
 
   function openQRCodeScanner() {
-    console.log("openQRCodeScanner");
+    setScannerActivated(true);
   }
 
-  async function checkSignature() {
-    // const { sha256Hash, sha512Hash } = await generateHashes(image.base64);
-    // const response = await verifyHashes(sha256Hash, sha512Hash);
-    // console.log(response.data);
+  async function initVerification() {
     navigation.reset({
       index: 0,
       routes: [
@@ -60,12 +69,50 @@ export default function VerifyPhotoScreen({ navigation }) {
     });
   }
 
+  function handleBarCodeScanned({ data }) {
+    setScanned(true);
+    const qrVerificationResult = verifySignatureData(data);
+    if (!qrVerificationResult.result) {
+      Alert.alert(
+        "Unbrauchbarer QR Code",
+        "Der gescannte QR Code enthält leider keine verwendbaren Informationen.",
+        [{ text: "OK", style: "destructive" }]
+      );
+    }
+    // put scanned data into the TextInputs
+    setPublicKey(qrVerificationResult.scannedPublicKey);
+    setSignature(qrVerificationResult.scannedSignature);
+    setScanned(false);
+    setScannerActivated(false);
+  }
+
   const imagePreview =
     !image || image.cancelled === true ? (
       <ImagePreviewPlaceholder onPress={selectImage} />
     ) : (
       <ImagePreview image={image} method="verify" onPress={selectImage} />
     );
+
+  const buttonOrScanner = scannerActivated ? (
+    <Pressable onPress={() => setScannerActivated(false)}>
+      <BarCodeScanner
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        style={{
+          width: (width * 3) / 4,
+          height: (height * 3) / 4,
+        }}
+        // only accept QR Codes
+        // https://docs.expo.dev/versions/v45.0.0/sdk/bar-code-scanner/#barcodetypes
+        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+      />
+    </Pressable>
+  ) : (
+    <HomeScreenButtonWhite
+      onPress={openQRCodeScanner}
+      iconName="qr"
+      title="QR-Code scannen"
+    />
+  );
 
   return (
     <View style={styles.container}>
@@ -77,11 +124,7 @@ export default function VerifyPhotoScreen({ navigation }) {
         contentContainerStyle={styles.scrollView}
       >
         {imagePreview}
-        <HomeScreenButtonWhite
-          onPress={openQRCodeScanner}
-          iconName="qr"
-          title="QR-Code scannen"
-        />
+        {buttonOrScanner}
         <SignatureDataInput
           publicKey={publicKey}
           setPublicKey={setPublicKey}
@@ -89,7 +132,7 @@ export default function VerifyPhotoScreen({ navigation }) {
           setSignature={setSignature}
         />
         <HomeScreenButtonWhite
-          onPress={checkSignature}
+          onPress={initVerification}
           iconName="check"
           title="Verifizieren"
           style={styles.button}

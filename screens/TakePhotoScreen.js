@@ -7,7 +7,6 @@ import {
   TextInput,
   useWindowDimensions,
   Alert,
-  Pressable,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import COLORS from "../constants/colors";
@@ -56,7 +55,7 @@ export default function TakePhotoScreen({ navigation }) {
     setImage(newImage);
   }
 
-  async function onSendButtonPressed() {
+  async function initSigning() {
     if (enteredTitle === "") {
       Alert.alert("Titel fehlt", "Bitte geben Sie einen Titel ein", [
         { text: "OK", style: "destructive" },
@@ -117,7 +116,7 @@ export default function TakePhotoScreen({ navigation }) {
         />
         <HomeScreenButtonWhite
           iconName="send"
-          onPress={onSendButtonPressed}
+          onPress={initSigning}
           title="Signatur erstellen"
           style={styles.button}
         />
