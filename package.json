@@ -12,6 +12,7 @@
   "dependencies": {
     "@expo-google-fonts/montserrat": "^0.2.2",
     "@react-native-clipboard/clipboard": "^1.10.0",
+    "@react-native-community/cameraroll": "^4.1.2",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.2",
     "axios": "^0.27.2",
@@ -19,8 +20,10 @@
     "expo": "~45.0.0",
     "expo-app-loading": "~2.0.0",
     "expo-asset-utils": "^3.0.0",
+    "expo-barcode-scanner": "~11.3.0",
     "expo-camera": "~12.2.0",
     "expo-clipboard": "~3.0.1",
+    "expo-crypto": "~10.2.0",
     "expo-font": "~10.1.0",
     "expo-image-picker": "~13.1.1",
     "expo-linear-gradient": "~11.3.0",
@@ -30,6 +33,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-native": "0.68.2",
+    "react-native-fs": "^2.20.0",
     "react-native-hash": "^2.0.3",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-qrcode-svg": "^6.1.2",
@@ -37,8 +41,7 @@
     "react-native-screens": "~3.11.1",
     "react-native-svg": "^12.3.0",
     "react-native-web": "0.17.7",
-    "expo-barcode-scanner": "~11.3.0",
-    "expo-crypto": "~10.2.0"
+    "expo-mail-composer": "~11.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

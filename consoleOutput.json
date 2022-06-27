@@ -1,0 +1,317 @@
+{
+  "_cancelLongPressDelayTimeout": [
+    "Function bound _cancelLongPressDelayTimeout"
+  ],
+  "_endHighlight": ["Function bound _endHighlight"],
+  "_getDistanceBetweenPoints": ["Function bound _getDistanceBetweenPoints"],
+  "_handleDelay": ["Function bound _handleDelay"],
+  "_handleLongDelay": ["Function bound _handleLongDelay"],
+  "_handleQueryLayout": ["Function bound _handleQueryLayout"],
+  "_isHighlight": ["Function bound _isHighlight"],
+  "_performSideEffectsForTransition": [
+    "Function bound _performSideEffectsForTransition"
+  ],
+  "_reactInternalInstance": {},
+  "_reactInternals": {
+    "_debugHookTypes": null,
+    "_debugNeedsRemount": false,
+    "_debugOwner": {
+      "_debugHookTypes": ["Array"],
+      "_debugNeedsRemount": false,
+      "_debugOwner": ["FiberNode"],
+      "_debugSource": "undefined",
+      "actualDuration": 63,
+      "actualStartTime": 1655987864946,
+      "alternate": null,
+      "child": ["Circular"],
+      "childLanes": 0,
+      "deletions": null,
+      "dependencies": null,
+      "elementType": ["Function QRCode"],
+      "flags": 1,
+      "index": 0,
+      "key": null,
+      "lanes": 0,
+      "memoizedProps": ["Object"],
+      "memoizedState": ["Object"],
+      "mode": 2,
+      "pendingProps": ["Object"],
+      "ref": null,
+      "return": ["FiberNode"],
+      "selfBaseDuration": 56,
+      "sibling": null,
+      "stateNode": null,
+      "subtreeFlags": 261,
+      "tag": 0,
+      "treeBaseDuration": 60,
+      "type": ["Function QRCode"],
+      "updateQueue": null
+    },
+    "_debugSource": "undefined",
+    "actualDuration": 7,
+    "actualStartTime": 1655987865002,
+    "alternate": null,
+    "child": {
+      "_debugHookTypes": null,
+      "_debugNeedsRemount": false,
+      "_debugOwner": ["Circular"],
+      "_debugSource": "undefined",
+      "actualDuration": 6,
+      "actualStartTime": 1655987865003,
+      "alternate": null,
+      "child": ["FiberNode"],
+      "childLanes": 0,
+      "deletions": null,
+      "dependencies": null,
+      "elementType": "RNSVGSvgView",
+      "flags": 256,
+      "index": 0,
+      "key": null,
+      "lanes": 0,
+      "memoizedProps": ["Object"],
+      "memoizedState": null,
+      "mode": 2,
+      "pendingProps": ["Object"],
+      "ref": ["Function anonymous"],
+      "return": ["Circular"],
+      "selfBaseDuration": 0,
+      "sibling": null,
+      "stateNode": ["ReactNativeFiberHostComponent"],
+      "subtreeFlags": 261,
+      "tag": 5,
+      "treeBaseDuration": 3,
+      "type": "RNSVGSvgView",
+      "updateQueue": null
+    },
+    "childLanes": 0,
+    "deletions": null,
+    "dependencies": null,
+    "elementType": ["Function Svg"],
+    "flags": 261,
+    "index": 0,
+    "key": null,
+    "lanes": 0,
+    "memoizedProps": {
+      "children": ["Array"],
+      "height": 288,
+      "preserveAspectRatio": "xMidYMid meet",
+      "viewBox": "0 0 288 288",
+      "width": 288
+    },
+    "memoizedState": { "touchable": ["Object"] },
+    "mode": 2,
+    "pendingProps": {
+      "children": ["Array"],
+      "height": 288,
+      "preserveAspectRatio": "xMidYMid meet",
+      "viewBox": "0 0 288 288",
+      "width": 288
+    },
+    "ref": ["Function getRef"],
+    "return": {
+      "_debugHookTypes": ["Array"],
+      "_debugNeedsRemount": false,
+      "_debugOwner": ["FiberNode"],
+      "_debugSource": "undefined",
+      "actualDuration": 63,
+      "actualStartTime": 1655987864946,
+      "alternate": null,
+      "child": ["Circular"],
+      "childLanes": 0,
+      "deletions": null,
+      "dependencies": null,
+      "elementType": ["Function QRCode"],
+      "flags": 1,
+      "index": 0,
+      "key": null,
+      "lanes": 0,
+      "memoizedProps": ["Object"],
+      "memoizedState": ["Object"],
+      "mode": 2,
+      "pendingProps": ["Object"],
+      "ref": null,
+      "return": ["FiberNode"],
+      "selfBaseDuration": 56,
+      "sibling": null,
+      "stateNode": null,
+      "subtreeFlags": 261,
+      "tag": 0,
+      "treeBaseDuration": 60,
+      "type": ["Function QRCode"],
+      "updateQueue": null
+    },
+    "selfBaseDuration": 1,
+    "sibling": null,
+    "stateNode": ["Circular"],
+    "subtreeFlags": 261,
+    "tag": 1,
+    "treeBaseDuration": 4,
+    "type": ["Function Svg"],
+    "updateQueue": {
+      "baseState": ["Object"],
+      "effects": null,
+      "firstBaseUpdate": null,
+      "lastBaseUpdate": null,
+      "shared": ["Object"]
+    }
+  },
+  "_receiveSignal": ["Function bound _receiveSignal"],
+  "_remeasureMetricsOnActivation": [
+    "Function bound _remeasureMetricsOnActivation"
+  ],
+  "_savePressInLocation": ["Function bound _savePressInLocation"],
+  "_startHighlight": ["Function bound _startHighlight"],
+  "componentDidMount": ["Function bound componentDidMount"],
+  "componentWillUnmount": ["Function bound componentWillUnmount"],
+  "context": {},
+  "getBBox": ["Function anonymous"],
+  "getCTM": ["Function anonymous"],
+  "getPointAtLength": ["Function anonymous"],
+  "getScreenCTM": ["Function anonymous"],
+  "getTotalLength": ["Function anonymous"],
+  "isPointInFill": ["Function anonymous"],
+  "isPointInStroke": ["Function anonymous"],
+  "measure": ["Function anonymous"],
+  "measureInWindow": ["Function anonymous"],
+  "measureLayout": ["Function anonymous"],
+  "props": {
+    "children": ["<Defs … />, <G … />, <G … />, undefined"],
+    "height": 288,
+    "preserveAspectRatio": "xMidYMid meet",
+    "viewBox": "0 0 288 288",
+    "width": 288
+  },
+  "refMethod": ["Function anonymous"],
+  "refs": {},
+  "root": {
+    "_children": [["ReactNativeFiberHostComponent"]],
+    "_internalFiberInstanceHandleDEV": {
+      "_debugHookTypes": null,
+      "_debugNeedsRemount": false,
+      "_debugOwner": ["FiberNode"],
+      "_debugSource": "undefined",
+      "actualDuration": 6,
+      "actualStartTime": 1655987865003,
+      "alternate": null,
+      "child": ["FiberNode"],
+      "childLanes": 0,
+      "deletions": null,
+      "dependencies": null,
+      "elementType": "RNSVGSvgView",
+      "flags": 256,
+      "index": 0,
+      "key": null,
+      "lanes": 0,
+      "memoizedProps": ["Object"],
+      "memoizedState": null,
+      "mode": 2,
+      "pendingProps": ["Object"],
+      "ref": ["Function anonymous"],
+      "return": ["FiberNode"],
+      "selfBaseDuration": 0,
+      "sibling": null,
+      "stateNode": ["Circular"],
+      "subtreeFlags": 261,
+      "tag": 5,
+      "treeBaseDuration": 3,
+      "type": "RNSVGSvgView",
+      "updateQueue": null
+    },
+    "_nativeTag": 749,
+    "viewConfig": {
+      "Commands": ["Object"],
+      "NativeProps": ["Object"],
+      "bubblingEventTypes": ["Object"],
+      "directEventTypes": ["Object"],
+      "uiViewClassName": "RNSVGSvgView",
+      "validAttributes": ["Object"]
+    }
+  },
+  "setNativeProps": ["Function anonymous"],
+  "state": { "touchable": { "responderID": null, "touchState": "undefined" } },
+  "toDataURL": ["Function anonymous"],
+  "touchableGetHighlightDelayMS": [
+    "Function bound touchableGetHighlightDelayMS"
+  ],
+  "touchableGetHitSlop": ["Function bound touchableGetHitSlop"],
+  "touchableGetInitialState": ["Function bound touchableGetInitialState"],
+  "touchableGetLongPressDelayMS": [
+    "Function bound touchableGetLongPressDelayMS"
+  ],
+  "touchableGetPressOutDelayMS": ["Function bound touchableGetPressOutDelayMS"],
+  "touchableGetPressRectOffset": ["Function bound touchableGetPressRectOffset"],
+  "touchableHandleActivePressIn": [
+    "Function bound touchableHandleActivePressIn"
+  ],
+  "touchableHandleActivePressOut": [
+    "Function bound touchableHandleActivePressOut"
+  ],
+  "touchableHandleBlur": ["Function bound touchableHandleBlur"],
+  "touchableHandleFocus": ["Function bound touchableHandleFocus"],
+  "touchableHandleLongPress": ["Function bound touchableHandleLongPress"],
+  "touchableHandlePress": ["Function bound touchableHandlePress"],
+  "touchableHandleResponderGrant": [
+    "Function bound touchableHandleResponderGrant"
+  ],
+  "touchableHandleResponderMove": [
+    "Function bound touchableHandleResponderMove"
+  ],
+  "touchableHandleResponderRelease": [
+    "Function bound touchableHandleResponderRelease"
+  ],
+  "touchableHandleResponderTerminate": [
+    "Function bound touchableHandleResponderTerminate"
+  ],
+  "touchableHandleResponderTerminationRequest": [
+    "Function bound touchableHandleResponderTerminationRequest"
+  ],
+  "touchableHandleStartShouldSetResponder": [
+    "Function bound touchableHandleStartShouldSetResponder"
+  ],
+  "touchableLongPressCancelsPress": [
+    "Function bound touchableLongPressCancelsPress"
+  ],
+  "updater": {
+    "enqueueForceUpdate": ["Function enqueueForceUpdate"],
+    "enqueueReplaceState": ["Function enqueueReplaceState"],
+    "enqueueSetState": ["Function enqueueSetState"],
+    "isMounted": ["Function isMounted"]
+  },
+  "withoutDefaultFocusAndBlur": {
+    "_cancelLongPressDelayTimeout": ["Function _cancelLongPressDelayTimeout"],
+    "_endHighlight": ["Function _endHighlight"],
+    "_getDistanceBetweenPoints": ["Function _getDistanceBetweenPoints"],
+    "_handleDelay": ["Function _handleDelay"],
+    "_handleLongDelay": ["Function _handleLongDelay"],
+    "_handleQueryLayout": ["Function _handleQueryLayout"],
+    "_isHighlight": ["Function _isHighlight"],
+    "_performSideEffectsForTransition": [
+      "Function _performSideEffectsForTransition"
+    ],
+    "_receiveSignal": ["Function _receiveSignal"],
+    "_remeasureMetricsOnActivation": ["Function _remeasureMetricsOnActivation"],
+    "_savePressInLocation": ["Function _savePressInLocation"],
+    "_startHighlight": ["Function _startHighlight"],
+    "componentDidMount": ["Function componentDidMount"],
+    "componentWillUnmount": ["Function componentWillUnmount"],
+    "touchableGetInitialState": ["Function touchableGetInitialState"],
+    "touchableHandleResponderGrant": ["Function touchableHandleResponderGrant"],
+    "touchableHandleResponderMove": ["Function touchableHandleResponderMove"],
+    "touchableHandleResponderRelease": [
+      "Function touchableHandleResponderRelease"
+    ],
+    "touchableHandleResponderTerminate": [
+      "Function touchableHandleResponderTerminate"
+    ],
+    "touchableHandleResponderTerminationRequest": [
+      "Function touchableHandleResponderTerminationRequest"
+    ],
+    "touchableHandleStartShouldSetResponder": [
+      "Function touchableHandleStartShouldSetResponder"
+    ],
+    "touchableLongPressCancelsPress": [
+      "Function touchableLongPressCancelsPress"
+    ],
+    "withoutDefaultFocusAndBlur": {}
+  }
+}

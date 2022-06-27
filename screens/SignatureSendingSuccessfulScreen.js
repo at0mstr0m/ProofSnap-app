@@ -4,18 +4,52 @@ import {
   Text,
   ScrollView,
   useWindowDimensions,
+  Alert,
 } from "react-native";
+import { useState } from "react";
 import COLORS from "../constants/colors";
+import { SHADOW } from "../constants/design";
 import ImagePreview from "../components/ImagePreview";
 import SignatureData from "../components/SignatureData";
+import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import QRCode from "react-native-qrcode-svg";
-import { SHADOW } from "../constants/design";
+import * as MailComposer from "expo-mail-composer";
+import { generateComposerOptions } from "../helpers/MailComposerHelper";
 
 export default function SignatureSendingSuccessfulScreen({ route }) {
   const { width, height } = useWindowDimensions();
+  const [qrCodePNGBase64, setQRCodePNGBase64] = useState("");
   const result = route.params.result;
   const image = route.params.image;
   const title = route.params.title;
+
+  async function saveQrToDisk(qrData) {
+    if (!qrData) return;
+    qrData.toDataURL((base64) => {
+      setQRCodePNGBase64("data:image/png;base64," + base64);
+    });
+  }
+
+  async function sendViaMail() {
+    // check if sending e-mails is available on the device. Only critical on iOS.
+    if (!(await MailComposer.isAvailableAsync())) {
+      Alert.alert(
+        "E-Mail nicht eingerichtet",
+        "Bitte richten Sie einen E-Mail Account auf diesem Gerät ein.",
+        [{ text: "OK", style: "destructive" }]
+      );
+      return;
+    }
+    MailComposer.composeAsync(
+      generateComposerOptions(
+        title,
+        result.public_key,
+        result.signature,
+        qrCodePNGBase64,
+        image.uri
+      )
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -41,8 +75,14 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
               signature: result.signature,
             })}
             size={(width * 3) / 4}
+            getRef={saveQrToDisk}
           />
         </View>
+        <HomeScreenButtonWhite
+          iconName="mail"
+          onPress={sendViaMail}
+          title="Per Mail senden"
+        />
       </ScrollView>
     </View>
   );
@@ -57,6 +97,6 @@ const styles = StyleSheet.create({
   },
   qrCode: {
     ...SHADOW,
-    marginBottom: 40,
+    marginBottom: 20,
   },
 });
