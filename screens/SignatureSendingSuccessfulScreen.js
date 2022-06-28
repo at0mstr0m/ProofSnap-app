@@ -26,7 +26,8 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
   async function saveQrToDisk(qrData) {
     if (!qrData) return;
     qrData.toDataURL((base64) => {
-      setQRCodePNGBase64("data:image/png;base64," + base64);
+      setQRCodePNGBase64(base64);
+      // setQRCodePNGBase64("data:image/png;base64," + base64);
     });
   }
 
@@ -41,7 +42,7 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
       return;
     }
     MailComposer.composeAsync(
-      generateComposerOptions(
+      await generateComposerOptions(
         title,
         result.public_key,
         result.signature,

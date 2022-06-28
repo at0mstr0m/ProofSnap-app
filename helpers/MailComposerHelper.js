@@ -1,4 +1,7 @@
-export function generateComposerOptions(
+import * as FileSystem from "expo-file-system";
+// import * as MediaLibrary from "expo-media-library";
+
+export async function generateComposerOptions(
   title,
   publicKey,
   signature,
@@ -15,20 +18,29 @@ export function generateComposerOptions(
   
   <body>
       <p>Hallo!</p>
-      <p>Ich habe grade dieses Bild mit Proof Snap signiert.<br></p>
+      <p>Ich habe grade dieses Bild mit ProofSnap signiert.<br></p>
       <p>Öffentlicher Schlüssel: ${publicKey}<br></p>
       <p>Signatur: ${signature}<br></p>
       </p>
-      <img src="${qrCodePNGBase64}" alt="qrcode" width="300" height="300" data-image-whitelisted style="display:block"/>
   </body>
   
   </html>
   `;
+  // https://stackoverflow.com/a/63308035
+  const qrImageUri =
+    FileSystem.documentDirectory +
+    `qr-code-${Math.floor(Math.random() * 9999999)}.png`; // add random number
+  console.log("filename", qrImageUri);
+  const foo = await FileSystem.writeAsStringAsync(qrImageUri, qrCodePNGBase64, {
+    encoding: FileSystem.EncodingType.Base64,
+  });
+  // needed to save qr code to camera roll
+  // await MediaLibrary.saveToLibraryAsync(qrImageUri);
   return {
     // body: `Ich habe grade dieses Bild mit Proof Snap signiert!/npublicKey: ${publicKey}/nsignature: ${signature}/n <img src="${qrCodePNGBase64}" alt="Red dot" />`,
     body: html,
     isHtml: true,
     subject: `ProofSnap Signatur von ${title}`,
-    attachments: [imageUri],
+    attachments: [imageUri, qrImageUri],
   };
 }
