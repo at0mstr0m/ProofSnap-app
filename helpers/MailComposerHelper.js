@@ -29,13 +29,11 @@ export async function generateComposerOptions(
   // https://stackoverflow.com/a/63308035
   const qrImageUri =
     FileSystem.documentDirectory +
-    `qr-code-${Math.floor(Math.random() * 9999999)}.png`; // add random number
-  console.log("filename", qrImageUri);
-  const foo = await FileSystem.writeAsStringAsync(qrImageUri, qrCodePNGBase64, {
+    `qr-code-${Math.floor(Math.random() * 9999999)}.png`; // add random number to filename
+  await FileSystem.writeAsStringAsync(qrImageUri, qrCodePNGBase64, {
     encoding: FileSystem.EncodingType.Base64,
   });
-  // needed to save qr code to camera roll
-  // await MediaLibrary.saveToLibraryAsync(qrImageUri);
+  // await MediaLibrary.saveToLibraryAsync(qrImageUri); // needed to save qr code to camera roll
   return {
     // body: `Ich habe grade dieses Bild mit Proof Snap signiert!/npublicKey: ${publicKey}/nsignature: ${signature}/n <img src="${qrCodePNGBase64}" alt="Red dot" />`,
     body: html,
