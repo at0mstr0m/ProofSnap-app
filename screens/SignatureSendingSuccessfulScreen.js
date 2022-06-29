@@ -6,7 +6,8 @@ import {
   useWindowDimensions,
   Alert,
 } from "react-native";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { SignedImagesContext } from "../context/SignedImagesContext";
 import COLORS from "../constants/colors";
 import { SHADOW } from "../constants/design";
 import ImagePreview from "../components/ImagePreview";
@@ -15,15 +16,17 @@ import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import QRCode from "react-native-qrcode-svg";
 import * as MailComposer from "expo-mail-composer";
 import { generateComposerOptions } from "../helpers/MailComposerHelper";
+import { getOrientation } from "../helpers/ImageHelper";
 
 export default function SignatureSendingSuccessfulScreen({ route }) {
-  const { width, height } = useWindowDimensions();
+  const signedImagesContext = useContext(SignedImagesContext);
+  const { width } = useWindowDimensions();
   const [qrCodePNGBase64, setQRCodePNGBase64] = useState("");
   const result = route.params.result;
   const image = route.params.image;
   const title = route.params.title;
 
-  async function saveQrToDisk(qrData) {
+  async function extractQRCodePNGBase64(qrData) {
     if (!qrData) return;
     qrData.toDataURL((base64) => {
       setQRCodePNGBase64(base64);
@@ -32,7 +35,7 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
   }
 
   async function sendViaMail() {
-    // check if sending e-mails is available on the device. Only critical on iOS.
+    // Check if sending e-mails is available on the device. Only relevant on iOS.
     if (!(await MailComposer.isAvailableAsync())) {
       Alert.alert(
         "E-Mail nicht eingerichtet",
@@ -41,6 +44,7 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
       );
       return;
     }
+    // open Mail composer
     MailComposer.composeAsync(
       await generateComposerOptions(
         title,
@@ -51,6 +55,18 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
       )
     );
   }
+
+  useEffect(() => {
+    if (qrCodePNGBase64) {
+      signedImagesContext.addSignedImage({
+        title: title,
+        public_key: result.public_key,
+        signature: result.signature,
+        qrCodePNGBase64: qrCodePNGBase64,
+        imageUri: image.uri,
+      });
+    }
+  }, [qrCodePNGBase64]);
 
   return (
     <View style={styles.container}>
@@ -76,7 +92,7 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
               signature: result.signature,
             })}
             size={(width * 3) / 4}
-            getRef={saveQrToDisk}
+            getRef={extractQRCodePNGBase64}
           />
         </View>
         <HomeScreenButtonWhite

@@ -21,6 +21,8 @@ import SignatureSendingFailedScreen from "./screens/SignatureSendingFailedScreen
 import VerificationSendingScreen from "./screens/VerificationSendingScreen";
 import VerificationSendingSuccessfulScreen from "./screens/VerificationSendingSuccessfulScreen";
 import VerificationSendingFailedScreen from "./screens/VerificationSendingFailedScreen";
+import SignedImageDetailScreen from "./screens/SignedImageDetailScreen";
+import { SignedImagesContextProvider } from "./context/SignedImagesContext";
 
 // https://reactnavigation.org/docs/hello-react-navigation#creating-a-native-stack-navigator
 const Stack = createNativeStackNavigator();
@@ -66,120 +68,130 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer onReady={onLayoutRootView}>
-      <Stack.Navigator initialRouteName="HomeScreen">
-        <Stack.Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{ headerShown: false }} // https://reactnavigation.org/docs/native-stack-navigator/#headershown
-        />
-        <Stack.Screen
-          name="AboutScreen"
-          component={AboutScreen}
-          options={{
-            animation: "slide_from_right",
-            headerStyle: { backgroundColor: COLORS.header },
-          }}
-        />
-        <Stack.Screen
-          name="LoginScreen"
-          component={LoginScreen}
-          options={{
-            animation: "slide_from_right",
-            headerStyle: { backgroundColor: COLORS.header },
-          }}
-        />
-        <Stack.Screen
-          name="TakePhotoScreen"
-          component={TakePhotoScreen}
-          options={{
-            animation: "slide_from_right",
-            headerStyle: { backgroundColor: COLORS.header },
-            title: "Signiertes Foto erstellen",
-          }}
-        />
-        <Stack.Screen
-          name="VerifyPhotoScreen"
-          component={VerifyPhotoScreen}
-          options={{
-            animation: "slide_from_right",
-            headerStyle: { backgroundColor: COLORS.header },
-            title: "Foto verifizieren",
-          }}
-        />
-        <Stack.Screen
-          name="AllPhotosScreen"
-          component={AllPhotosScreen}
-          options={{
-            animation: "slide_from_right",
-            headerStyle: { backgroundColor: COLORS.header },
-          }}
-        />
-        <Stack.Screen
-          name="SignatureSendingScreen"
-          component={SignatureSendingScreen}
-          options={{
-            animation: "slide_from_right",
-            title: "Signatur wird erstellt...",
-            headerTitleAlign: "center",
-            headerStyle: { backgroundColor: COLORS.header },
-            // https://freakycoder.com/react-native-notes-28-how-to-prevent-go-back-with-react-navigation-v6-f214c45f6315
-            gestureEnabled: false,
-            headerBackVisible: false,
-            headerLeft: () => <></>,
-          }}
-        />
-        <Stack.Screen
-          name="VerificationSendingScreen"
-          component={VerificationSendingScreen}
-          options={{
-            animation: "slide_from_right",
-            headerTitleAlign: "center",
-            title: "Signatur wird überprüft...",
-            headerStyle: { backgroundColor: COLORS.header },
-            // https://freakycoder.com/react-native-notes-28-how-to-prevent-go-back-with-react-navigation-v6-f214c45f6315
-            gestureEnabled: false,
-            headerBackVisible: false,
-            headerLeft: () => <></>,
-          }}
-        />
-        <Stack.Screen
-          name="SignatureSendingSuccessfulScreen"
-          component={SignatureSendingSuccessfulScreen}
-          options={{
-            animation: "slide_from_right",
-            title: "Signatur erstellt",
-            headerStyle: { backgroundColor: COLORS.header },
-          }}
-        />
-        <Stack.Screen
-          name="SignatureSendingFailedScreen"
-          component={SignatureSendingFailedScreen}
-          options={{
-            animation: "slide_from_right",
-            title: "Signatur erstellen gescheitert",
-            headerStyle: { backgroundColor: COLORS.header },
-          }}
-        />
-        <Stack.Screen
-          name="VerificationSendingSuccessfulScreen"
-          component={VerificationSendingSuccessfulScreen}
-          options={{
-            animation: "slide_from_right",
-            title: "Signatur überprüft",
-            headerStyle: { backgroundColor: COLORS.header },
-          }}
-        />
-        <Stack.Screen
-          name="VerificationSendingFailedScreen"
-          component={VerificationSendingFailedScreen}
-          options={{
-            animation: "slide_from_right",
-            title: "Signatur überprüfen gescheitert",
-            headerStyle: { backgroundColor: COLORS.header },
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SignedImagesContextProvider>
+      <NavigationContainer onReady={onLayoutRootView}>
+        <Stack.Navigator initialRouteName="HomeScreen">
+          <Stack.Screen
+            name="HomeScreen"
+            component={HomeScreen}
+            options={{ headerShown: false }} // https://reactnavigation.org/docs/native-stack-navigator/#headershown
+          />
+          <Stack.Screen
+            name="AboutScreen"
+            component={AboutScreen}
+            options={{
+              animation: "slide_from_right",
+              headerStyle: { backgroundColor: COLORS.header },
+            }}
+          />
+          <Stack.Screen
+            name="LoginScreen"
+            component={LoginScreen}
+            options={{
+              animation: "slide_from_right",
+              headerStyle: { backgroundColor: COLORS.header },
+            }}
+          />
+          <Stack.Screen
+            name="TakePhotoScreen"
+            component={TakePhotoScreen}
+            options={{
+              animation: "slide_from_right",
+              headerStyle: { backgroundColor: COLORS.header },
+              title: "Signiertes Foto erstellen",
+            }}
+          />
+          <Stack.Screen
+            name="VerifyPhotoScreen"
+            component={VerifyPhotoScreen}
+            options={{
+              animation: "slide_from_right",
+              headerStyle: { backgroundColor: COLORS.header },
+              title: "Foto verifizieren",
+            }}
+          />
+          <Stack.Screen
+            name="AllPhotosScreen"
+            component={AllPhotosScreen}
+            options={{
+              animation: "slide_from_right",
+              headerStyle: { backgroundColor: COLORS.header },
+            }}
+          />
+          <Stack.Screen
+            name="SignedImageDetailScreen"
+            component={SignedImageDetailScreen}
+            options={{
+              animation: "slide_from_right",
+              headerStyle: { backgroundColor: COLORS.header },
+            }}
+          />
+          <Stack.Screen
+            name="SignatureSendingScreen"
+            component={SignatureSendingScreen}
+            options={{
+              animation: "slide_from_right",
+              title: "Signatur wird erstellt...",
+              headerTitleAlign: "center",
+              headerStyle: { backgroundColor: COLORS.header },
+              // https://freakycoder.com/react-native-notes-28-how-to-prevent-go-back-with-react-navigation-v6-f214c45f6315
+              gestureEnabled: false,
+              headerBackVisible: false,
+              headerLeft: () => <></>,
+            }}
+          />
+          <Stack.Screen
+            name="VerificationSendingScreen"
+            component={VerificationSendingScreen}
+            options={{
+              animation: "slide_from_right",
+              headerTitleAlign: "center",
+              title: "Signatur wird überprüft...",
+              headerStyle: { backgroundColor: COLORS.header },
+              // https://freakycoder.com/react-native-notes-28-how-to-prevent-go-back-with-react-navigation-v6-f214c45f6315
+              gestureEnabled: false,
+              headerBackVisible: false,
+              headerLeft: () => <></>,
+            }}
+          />
+          <Stack.Screen
+            name="SignatureSendingSuccessfulScreen"
+            component={SignatureSendingSuccessfulScreen}
+            options={{
+              animation: "slide_from_right",
+              title: "Signatur erstellt",
+              headerStyle: { backgroundColor: COLORS.header },
+            }}
+          />
+          <Stack.Screen
+            name="SignatureSendingFailedScreen"
+            component={SignatureSendingFailedScreen}
+            options={{
+              animation: "slide_from_right",
+              title: "Signatur erstellen gescheitert",
+              headerStyle: { backgroundColor: COLORS.header },
+            }}
+          />
+          <Stack.Screen
+            name="VerificationSendingSuccessfulScreen"
+            component={VerificationSendingSuccessfulScreen}
+            options={{
+              animation: "slide_from_right",
+              title: "Signatur überprüft",
+              headerStyle: { backgroundColor: COLORS.header },
+            }}
+          />
+          <Stack.Screen
+            name="VerificationSendingFailedScreen"
+            component={VerificationSendingFailedScreen}
+            options={{
+              animation: "slide_from_right",
+              title: "Signatur überprüfen gescheitert",
+              headerStyle: { backgroundColor: COLORS.header },
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SignedImagesContextProvider>
   );
 }

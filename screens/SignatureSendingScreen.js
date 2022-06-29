@@ -13,11 +13,11 @@ export default function SignatureSendingScreen({ navigation, route }) {
 
   async function sendData() {
     const asset = await createAssetAsync(image.uri);
-    console.log(image.base64.length);
+    console.log("asset", asset);
+    // console.log("image.base64.length:", image.base64.length);
     const { sha256Hash, sha512Hash } = await generateHashes(image.base64);
-
     const httpResponse = await signHashes(sha256Hash, sha512Hash);
-    console.log(httpResponse);
+    // console.log("httpResponse:", httpResponse);
     if (!httpResponse) {
       setResult("failed");
     } else if (
@@ -26,13 +26,6 @@ export default function SignatureSendingScreen({ navigation, route }) {
     ) {
       setResult(httpResponse.data);
     } else setResult("failed");
-  }
-
-  function setNavigationTitle() {
-    // https://reactnavigation.org/docs/5.x/navigation-prop/#setoptions
-    navigation.setOptions({
-      title: "Erstelle Signatur...",
-    });
   }
 
   // leave this screen when done sending data to backend
@@ -74,16 +67,14 @@ export default function SignatureSendingScreen({ navigation, route }) {
   // disable going anywhere until sending is done
   // https://reactnavigation.org/docs/preventing-going-back/
   useEffect(
-    () =>
-      navigation.addListener("beforeRemove", (e) => {
-        // Prevent default behavior of leaving the screen before sending is done
-        if (!result) e.preventDefault();
-      }),
+    navigation.addListener("beforeRemove", (e) => {
+      // Prevent default behavior of leaving the screen before sending is done
+      if (!result) e.preventDefault();
+    }),
     [navigation, result]
   );
 
   useEffect(() => {
-    setNavigationTitle();
     sendData();
   }, []);
 

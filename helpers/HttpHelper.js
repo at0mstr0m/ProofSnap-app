@@ -29,7 +29,7 @@ export async function signHashes(sha256Hash, sha512Hash) {
     */
   try {
     response = await axios.post(`${BACKEND_IP}/sign`, payload, REQUEST_CONFIG);
-    console.log(response);
+    // console.log(response);
   } catch (error) {
     console.error(error);
   }
