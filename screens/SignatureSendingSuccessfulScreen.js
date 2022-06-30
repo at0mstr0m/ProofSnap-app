@@ -5,6 +5,7 @@ import {
   ScrollView,
   useWindowDimensions,
   Alert,
+  Button,
 } from "react-native";
 import { useState, useContext, useEffect } from "react";
 import { SignedImagesContext } from "../context/SignedImagesContext";
@@ -16,7 +17,7 @@ import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import QRCode from "react-native-qrcode-svg";
 import * as MailComposer from "expo-mail-composer";
 import { generateComposerOptions } from "../helpers/MailComposerHelper";
-import { getOrientation } from "../helpers/ImageHelper";
+import * as Sharing from "expo-sharing";
 
 export default function SignatureSendingSuccessfulScreen({ route }) {
   const signedImagesContext = useContext(SignedImagesContext);
@@ -53,6 +54,40 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
         qrCodePNGBase64,
         image.uri
       )
+    );
+  }
+
+  async function share() {
+    // check if sharing is available on the current device
+    if (!(await Sharing.isAvailableAsync())) {
+      Alert.alert(
+        "Teilen auf diesem Gerät nicht verfügbar.",
+        'Bitte versuchen sie die Funktion "Per Mail senden"',
+        [{ text: "OK", style: "destructive" }]
+      );
+      // abort if sharing is not available on the current device
+      return;
+    }
+    // draw users attention to problems with compression and
+    Alert.alert(
+      "Wichtiger Hinweis.",
+      "Das Teilen dieses Bildes auf z.B. WhatsApp ist zwar möglich, jedoch wird hierbei die Bilddatei durch Kompression verändert und ist danach nicht mehr mit ProofSnap verifizierbar! ",
+      [
+        {
+          text: "Verstanden",
+          style: "default",
+          onPress: () =>
+            Sharing.shareAsync(image.uri, {
+              // only used by iOS
+              // https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_conc/understand_utis_conc.html
+              UTI: "public.image",
+              // only used by Android
+              // https://stackoverflow.com/a/27550058/13128152
+              mimeType: "image/jpg",
+            }),
+        },
+        { text: "Abbrechen", style: "destructive" },
+      ]
     );
   }
 
@@ -95,6 +130,11 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
             getRef={extractQRCodePNGBase64}
           />
         </View>
+        <HomeScreenButtonWhite
+          title="Teilen"
+          iconName="share"
+          onPress={share}
+        />
         <HomeScreenButtonWhite
           iconName="mail"
           onPress={sendViaMail}

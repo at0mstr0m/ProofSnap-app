@@ -10,6 +10,7 @@ import { Foundation } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors";
 import { SHADOW, BORDER_RADIUS, ICON_SIZE } from "../../constants/design";
 
@@ -59,6 +60,15 @@ export default function HomeScreenButtonWhite({
       icon = (
         <MaterialIcons
           name="email"
+          size={ICON_SIZE}
+          color={COLORS.buttonText}
+        />
+      );
+      break;
+    case "share":
+      icon = (
+        <Ionicons
+          name="ios-share-social"
           size={ICON_SIZE}
           color={COLORS.buttonText}
         />
