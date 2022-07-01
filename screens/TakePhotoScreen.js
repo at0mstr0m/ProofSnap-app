@@ -23,7 +23,7 @@ import ImagePreviewPlaceholder from "../components/ImagePreviewPlaceholder";
 export default function TakePhotoScreen({ navigation }) {
   const [image, setImage] = useState(null);
   const [enteredTitle, setEnteredTitle] = useState("");
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   function titleInputHandler(enteredText) {
     setEnteredTitle(enteredText);

@@ -14,8 +14,8 @@ const MARGIN = 10;
 
 export default function SignedImageDetailScreen({ navigation, route }) {
   const signedImageData = route.params.signedImageData;
-  const [imageHeight, setImageHeight] = useState(100);
   const { width } = useWindowDimensions();
+  const [imageHeight, setImageHeight] = useState(width);
 
   useEffect(() => {
     // https://reactnavigation.org/docs/5.x/navigation-prop/#setoptions
@@ -27,6 +27,10 @@ export default function SignedImageDetailScreen({ navigation, route }) {
       const zoomFactor = width / originalWidth;
       setImageHeight(originalHeight * zoomFactor);
     });
+    // avoid Error "Can't perform a React state update on an unmounted component."
+    // by cleaning up
+    // https://stackoverflow.com/a/65007703/13128152
+    return () => setImageHeight(width);
   }, []);
 
   return (

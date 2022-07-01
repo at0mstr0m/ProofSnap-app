@@ -13,7 +13,7 @@ export default function VerificationSendingScreen({ navigation, route }) {
   const [result, setResult] = useState(null);
 
   async function sendData() {
-    const asset = await createAssetAsync(image.uri);
+    // const asset = await createAssetAsync(image.uri);
     console.log(image.base64.length);
     const { sha256Hash, sha512Hash } = await generateHashes(image.base64);
 
@@ -23,9 +23,7 @@ export default function VerificationSendingScreen({ navigation, route }) {
       publicKey,
       signature
     );
-    if (!httpResponse) {
-      setResult("failed");
-    } else if (
+    if (
       httpResponse?.status === 200 &&
       httpResponse.data?.message === "checked signature"
     ) {

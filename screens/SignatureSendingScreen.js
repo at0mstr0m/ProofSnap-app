@@ -13,18 +13,20 @@ export default function SignatureSendingScreen({ navigation, route }) {
 
   async function sendData() {
     const asset = await createAssetAsync(image.uri);
-    console.log("asset", asset);
+    console.log("image.uri", image.uri);
+    console.log("asset.uri", asset.uri);
     // console.log("image.base64.length:", image.base64.length);
     const { sha256Hash, sha512Hash } = await generateHashes(image.base64);
     const httpResponse = await signHashes(sha256Hash, sha512Hash);
     // console.log("httpResponse:", httpResponse);
-    if (!httpResponse) {
-      setResult("failed");
-    } else if (
+    if (
       httpResponse?.status === 201 &&
       httpResponse.data?.message === "successfully signed"
     ) {
-      setResult(httpResponse.data);
+      setResult({
+        response: httpResponse.data,
+        assetUri: asset.uri,
+      });
     } else setResult("failed");
   }
 

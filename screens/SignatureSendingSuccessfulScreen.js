@@ -23,7 +23,8 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
   const signedImagesContext = useContext(SignedImagesContext);
   const { width } = useWindowDimensions();
   const [qrCodePNGBase64, setQRCodePNGBase64] = useState("");
-  const result = route.params.result;
+  const response = route.params.result.response;
+  const assetUri = route.params.result.assetUri;
   const image = route.params.image;
   const title = route.params.title;
 
@@ -49,9 +50,10 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
     MailComposer.composeAsync(
       await generateComposerOptions(
         title,
-        result.public_key,
-        result.signature,
+        response.public_key,
+        response.signature,
         qrCodePNGBase64,
+        // should not matter if assetUri or image.uri is used, but come what may image.uri should definitely be working
         image.uri
       )
     );
@@ -77,14 +79,18 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
           text: "Verstanden",
           style: "default",
           onPress: () =>
-            Sharing.shareAsync(image.uri, {
-              // only used by iOS
-              // https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_conc/understand_utis_conc.html
-              UTI: "public.image",
-              // only used by Android
-              // https://stackoverflow.com/a/27550058/13128152
-              mimeType: "image/jpg",
-            }),
+            Sharing.shareAsync(
+              // should not matter if assetUri or image.uri is used, but come what may image.uri should definitely be working
+              image.uri,
+              {
+                // only used by iOS
+                // https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_conc/understand_utis_conc.html
+                UTI: "public.image",
+                // only used by Android
+                // https://stackoverflow.com/a/27550058/13128152
+                mimeType: "image/jpg",
+              }
+            ),
         },
         { text: "Abbrechen", style: "destructive" },
       ]
@@ -95,10 +101,10 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
     if (qrCodePNGBase64) {
       signedImagesContext.addSignedImage({
         title: title,
-        public_key: result.public_key,
-        signature: result.signature,
+        public_key: response.public_key,
+        signature: response.signature,
         qrCodePNGBase64: qrCodePNGBase64,
-        imageUri: image.uri,
+        imageUri: assetUri,
       });
     }
   }, [qrCodePNGBase64]);
@@ -117,14 +123,14 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
         <Text>Title: {title}</Text>
         <ImagePreview image={image} />
         <SignatureData
-          publicKey={result.public_key}
-          signature={result.signature}
+          publicKey={response.public_key}
+          signature={response.signature}
         />
         <View style={styles.qrCode}>
           <QRCode
             value={JSON.stringify({
-              public_key: result.public_key,
-              signature: result.signature,
+              public_key: response.public_key,
+              signature: response.signature,
             })}
             size={(width * 3) / 4}
             getRef={extractQRCodePNGBase64}
