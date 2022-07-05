@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const BACKEND_IP = "http://192.168.188.40:1337";
-// const BACKEND_IP = "https://proofsnap.herokuapp.com/";
+// const BACKEND_IP = "http://192.168.188.40:1337";
+const BACKEND_IP = "https://proofsnap.herokuapp.com/";
 const REQUEST_CONFIG = {
   headers: {
     "Content-Type": "multipart/form-data",
@@ -48,7 +48,7 @@ export async function verifyHashes(
   payload.append("sha512Hash", sha512Hash);
   payload.append("publicKey", publicKey);
   payload.append("signature", signature);
-  payload.append("timestamp", "" + timestamp);
+  payload.append("timestamp", timestamp);
   let response;
   try {
     response = await axios.post(`${BACKEND_IP}/check`, payload, REQUEST_CONFIG);

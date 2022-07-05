@@ -72,7 +72,7 @@ export default function VerifyPhotoScreen({ navigation }) {
   }
 
   function handleBarCodeScanned({ data }) {
-    setScanned(true);
+    setScanned(true); // avoids render errors
     const qrVerificationResult = verifySignatureData(data);
     if (!qrVerificationResult.result) {
       Alert.alert(
@@ -84,7 +84,7 @@ export default function VerifyPhotoScreen({ navigation }) {
     // put scanned data into the TextInputs
     setPublicKey(qrVerificationResult.scannedPublicKey);
     setSignature(qrVerificationResult.scannedSignature);
-    setTimestamp(qrVerificationResult.timestamp);
+    setTimestamp(qrVerificationResult.scannedTimestamp);
     setScanned(false);
     setScannerActivated(false);
   }

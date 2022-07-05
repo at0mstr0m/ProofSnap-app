@@ -1,10 +1,13 @@
-const QR_DATA_LENGTH = 591;
+const MIN_QR_DATA_LENGTH = 581;
+const MAX_QR_DATA_LENGTH = 591;
 export const KEY_LENGTH = 264;
 export const MIN_TIMESTAMP_LENGTH = 10;
 export const MAX_TIMESTAMP_LENGTH = 18;
 // every key must be a hexadecimal number of certain length
 const KEY_MATCHER = new RegExp(`[0-9a-f]{${KEY_LENGTH}}`);
-const TIMESTAMP_MATCHER = new RegExp(`[0-9\.]{${MIN_TIMESTAMP_LENGTH},${MAX_TIMESTAMP_LENGTH}}`);
+const TIMESTAMP_MATCHER = new RegExp(
+  `[0-9\.]{${MIN_TIMESTAMP_LENGTH},${MAX_TIMESTAMP_LENGTH}}`
+);
 
 export function isPossibleKey(key) {
   return KEY_MATCHER.test(key);
@@ -18,10 +21,12 @@ export function isPossibleTimestamp(timestamp) {
 }
 
 export function verifySignatureData(data) {
-  if (data.length !== QR_DATA_LENGTH) return { result: false };
+  if (data.length < MIN_QR_DATA_LENGTH || data.length > MAX_QR_DATA_LENGTH)
+    return { result: false };
   let unpackedData;
   try {
     unpackedData = JSON.parse(data);
+    console.log(unpackedData);
   } catch (error) {
     console.error(error);
     return { result: false };
