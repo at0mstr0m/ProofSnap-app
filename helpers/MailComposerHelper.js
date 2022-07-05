@@ -5,6 +5,7 @@ export async function generateComposerOptions(
   title,
   publicKey,
   signature,
+  timestamp,
   qrCodePNGBase64,
   imageUri
 ) {
@@ -21,6 +22,7 @@ export async function generateComposerOptions(
       <p>Ich habe grade dieses Bild mit ProofSnap signiert.<br></p>
       <p>Öffentlicher Schlüssel: ${publicKey}<br></p>
       <p>Signatur: ${signature}<br></p>
+      <p>Zeitstempel: ${timestamp}<br></p>
       </p>
   </body>
   

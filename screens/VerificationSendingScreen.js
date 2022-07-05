@@ -10,6 +10,7 @@ export default function VerificationSendingScreen({ navigation, route }) {
   const image = route.params.image;
   const publicKey = route.params.publicKey;
   const signature = route.params.signature;
+  const timestamp = route.params.timestamp;
   const [result, setResult] = useState(null);
 
   async function sendData() {
@@ -21,7 +22,8 @@ export default function VerificationSendingScreen({ navigation, route }) {
       sha256Hash,
       sha512Hash,
       publicKey,
-      signature
+      signature,
+      timestamp
     );
     if (
       httpResponse?.status === 200 &&

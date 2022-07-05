@@ -12,6 +12,7 @@ import PasteButton from "./Buttons/PasteButton";
 import * as Clipboard from "expo-clipboard";
 import {
   isPossibleKey,
+  isPossibleTimestamp,
   KEY_LENGTH,
 } from "../helpers/SignatureDataVerificationHelper";
 
@@ -22,8 +23,10 @@ export default function SignatureDataInput({
   setPublicKey,
   signature,
   setSignature,
+  timestamp,
+  setTimestamp,
 }) {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   function publicKeyInputHandler(enteredText) {
     setPublicKey(enteredText);
@@ -33,20 +36,27 @@ export default function SignatureDataInput({
     setSignature(enteredText);
   }
 
+  function timestampInputHandler(enteredText) {
+    setTimestamp(enteredText);
+  }
+
   async function pasteFromClipboard() {
     const clipboardText = await Clipboard.getStringAsync();
+    console.log("clipboardText", clipboardText);
     let signatureData;
     try {
       // parse object from Clipboard
       signatureData = JSON.parse(clipboardText);
       // only fill TextInput fields if the keys hav a valid length and
-      // contain only hexadecimal characters 0-9 and a-f
+      // contain possible characters
       if (
         isPossibleKey(signatureData?.public_key) &&
-        isPossibleKey(signatureData?.signature)
+        isPossibleKey(signatureData?.signature) &&
+        isPossibleTimestamp(signatureData?.timestamp)
       ) {
         setPublicKey(signatureData.public_key);
         setSignature(signatureData.signature);
+        setTimestamp(signatureData.timestamp);
       }
     } catch (error) {
       console.error(error);
@@ -61,7 +71,7 @@ export default function SignatureDataInput({
         </Text>
         <PasteButton onPress={pasteFromClipboard} />
       </View>
-      <View style={[styles.inputContainer, { marginBottom: 0 }]}>
+      <View style={styles.inputContainer}>
         <TextInput
           style={styles.text}
           numberOfLines={1}
@@ -82,6 +92,18 @@ export default function SignatureDataInput({
           maxLength={KEY_LENGTH}
           onChangeText={signatureInputHandler}
           value={signature}
+        />
+      </View>
+      <Text style={styles.title}>ZEITSTEMPEL</Text>
+      <View style={[styles.inputContainer, { marginBottom: MARGIN }]}>
+        <TextInput
+          style={styles.text}
+          numberOfLines={1}
+          placeholder="ZEITSTEMPEL"
+          placeholderTextColor={COLORS.header}
+          maxLength={KEY_LENGTH}
+          onChangeText={timestampInputHandler}
+          value={"" + timestamp}
         />
       </View>
     </View>
@@ -115,6 +137,7 @@ const styles = StyleSheet.create({
     paddingRight: (MARGIN * 3) / 4,
     margin: MARGIN,
     marginTop: 0,
+    marginBottom: 0,
   },
   text: {
     fontFamily: "Montserrat_400Regular",

@@ -52,6 +52,7 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
         title,
         response.public_key,
         response.signature,
+        response.timestamp,
         qrCodePNGBase64,
         // should not matter if assetUri or image.uri is used, but come what may image.uri should definitely be working
         image.uri
@@ -103,11 +104,20 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
         title: title,
         public_key: response.public_key,
         signature: response.signature,
+        timestamp: response.timestamp,
         qrCodePNGBase64: qrCodePNGBase64,
         imageUri: assetUri,
       });
     }
   }, [qrCodePNGBase64]);
+
+  console.log(
+    JSON.stringify({
+      public_key: response.public_key,
+      signature: response.signature,
+      timestamp: response.timestamp,
+    })
+  );
 
   return (
     <View style={styles.container}>
@@ -125,12 +135,14 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
         <SignatureData
           publicKey={response.public_key}
           signature={response.signature}
+          timestamp={response.timestamp}
         />
         <View style={styles.qrCode}>
           <QRCode
             value={JSON.stringify({
               public_key: response.public_key,
               signature: response.signature,
+              timestamp: response.timestamp,
             })}
             size={(width * 3) / 4}
             getRef={extractQRCodePNGBase64}

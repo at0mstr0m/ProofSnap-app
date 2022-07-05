@@ -22,6 +22,7 @@ export default function VerifyPhotoScreen({ navigation }) {
   const [image, setImage] = useState(null);
   const [publicKey, setPublicKey] = useState("");
   const [signature, setSignature] = useState("");
+  const [timestamp, setTimestamp] = useState("");
   const [scanned, setScanned] = useState(false);
   const [scannerActivated, setScannerActivated] = useState(false);
   const { width, height } = useWindowDimensions();
@@ -63,6 +64,7 @@ export default function VerifyPhotoScreen({ navigation }) {
             image: image,
             publicKey: publicKey,
             signature: signature,
+            timestamp: timestamp,
           },
         },
       ],
@@ -82,6 +84,7 @@ export default function VerifyPhotoScreen({ navigation }) {
     // put scanned data into the TextInputs
     setPublicKey(qrVerificationResult.scannedPublicKey);
     setSignature(qrVerificationResult.scannedSignature);
+    setTimestamp(qrVerificationResult.timestamp);
     setScanned(false);
     setScannerActivated(false);
   }
@@ -130,6 +133,8 @@ export default function VerifyPhotoScreen({ navigation }) {
           setPublicKey={setPublicKey}
           signature={signature}
           setSignature={setSignature}
+          timestamp={timestamp}
+          setTimestamp={setTimestamp}
         />
         <HomeScreenButtonWhite
           onPress={initVerification}

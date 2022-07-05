@@ -6,7 +6,7 @@ import * as Clipboard from "expo-clipboard";
 
 const MARGIN = 12;
 
-export default function SignatureData({ publicKey, signature }) {
+export default function SignatureData({ publicKey, signature, timestamp }) {
   const { width, height } = useWindowDimensions();
 
   async function copyToClipboard() {
@@ -14,6 +14,7 @@ export default function SignatureData({ publicKey, signature }) {
       JSON.stringify({
         public_key: publicKey,
         signature: signature,
+        timestamp: timestamp,
       })
     );
   }
@@ -26,7 +27,7 @@ export default function SignatureData({ publicKey, signature }) {
         </Text>
         <CopyButton onPress={copyToClipboard} />
       </View>
-      <View style={[styles.textContainer, { marginBottom: 0 }]}>
+      <View style={styles.textContainer}>
         <Text style={styles.text} numberOfLines={1}>
           {publicKey}
         </Text>
@@ -35,6 +36,12 @@ export default function SignatureData({ publicKey, signature }) {
       <View style={styles.textContainer}>
         <Text style={styles.text} numberOfLines={1}>
           {signature}
+        </Text>
+      </View>
+      <Text style={styles.title}>ZEITSTEMPEL</Text>
+      <View style={[styles.textContainer, { marginBottom: MARGIN }]}>
+        <Text style={styles.text} numberOfLines={1}>
+          {timestamp}
         </Text>
       </View>
     </View>
@@ -67,6 +74,7 @@ const styles = StyleSheet.create({
     padding: (MARGIN * 2) / 3,
     margin: MARGIN,
     marginTop: 0,
+    marginBottom: 0,
   },
   text: {
     fontFamily: "Montserrat_400Regular",

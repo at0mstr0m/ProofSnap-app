@@ -1,10 +1,20 @@
-const QR_DATA_LENGTH = 560;
+const QR_DATA_LENGTH = 591;
 export const KEY_LENGTH = 264;
+export const MIN_TIMESTAMP_LENGTH = 10;
+export const MAX_TIMESTAMP_LENGTH = 18;
 // every key must be a hexadecimal number of certain length
-const MATCHER = new RegExp(`[0-9a-f]{${KEY_LENGTH}}`);
+const KEY_MATCHER = new RegExp(`[0-9a-f]{${KEY_LENGTH}}`);
+const TIMESTAMP_MATCHER = new RegExp(`[0-9\.]{${MIN_TIMESTAMP_LENGTH},${MAX_TIMESTAMP_LENGTH}}`);
 
 export function isPossibleKey(key) {
-  return MATCHER.test(key);
+  return KEY_MATCHER.test(key);
+}
+
+export function isPossibleTimestamp(timestamp) {
+  return (
+    TIMESTAMP_MATCHER.test("" + timestamp) && // converted to string using  '"" +'
+    new Date(timestamp).getTime() > 0 // timestamp must at least be somehow valid https://stackoverflow.com/a/12423012/13128152
+  );
 }
 
 export function verifySignatureData(data) {
@@ -18,12 +28,18 @@ export function verifySignatureData(data) {
   }
   const publicKey = unpackedData?.public_key;
   const signature = unpackedData?.signature;
-  if (!publicKey || !signature) return { result: false };
-  if (isPossibleKey(publicKey) && isPossibleKey(signature))
+  const timestamp = unpackedData?.timestamp;
+  if (!publicKey || !signature || !timestamp) return { result: false };
+  if (
+    isPossibleKey(publicKey) &&
+    isPossibleKey(signature) &&
+    isPossibleTimestamp(timestamp)
+  )
     return {
       result: true,
       scannedPublicKey: publicKey,
       scannedSignature: signature,
+      scannedTimestamp: timestamp,
     };
   else return { result: false };
 }
