@@ -16,11 +16,9 @@ import {
 } from "../constants/design";
 import SignatureData from "../components/SignatureData";
 import { parseToDDMMYYYYdashHHMM } from "../helpers/DateHelper";
-import { openShareOptions, sendViaMail } from "../helpers/ShareHelper";
+import { openShareOptions, sendViaMailX, openShareOptionsX } from "../helpers/ShareHelper";
 import QRCodeContainer from "../components/QRCodeContainer";
 import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
-import * as FileSystem from "expo-file-system";
-
 
 const MARGIN = 10;
 
@@ -102,11 +100,11 @@ export default function SignedImageDetailScreen({ navigation, route }) {
         <HomeScreenButtonWhite
           title="Teilen"
           iconName="share"
-          onPress={openShareOptions.bind(this, signedImageData.imageUri)}
+          onPress={Platform.OS === "android" ? openShareOptions.bind(this, signedImageData.imageUri) : openShareOptionsX.bind(this, signedImageData.imageUri)}
         />
         <HomeScreenButtonWhite
           iconName="mail"
-          onPress={sendViaMail.bind(this, {
+          onPress={sendViaMailX.bind(this, {
             title: signedImageData.title,
             publicKey: signedImageData.public_key,
             signature: signedImageData.signature,
