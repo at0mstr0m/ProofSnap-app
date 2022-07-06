@@ -34,6 +34,5 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontFamily: "Montserrat_900Black",
-    fontWeight: "900",
   },
 });

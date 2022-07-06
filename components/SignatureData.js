@@ -7,7 +7,7 @@ import * as Clipboard from "expo-clipboard";
 const MARGIN = 12;
 
 export default function SignatureData({ publicKey, signature, timestamp }) {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   async function copyToClipboard() {
     await Clipboard.setStringAsync(

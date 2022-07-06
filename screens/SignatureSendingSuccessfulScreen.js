@@ -10,7 +10,6 @@ import {
 import { useState, useContext, useEffect } from "react";
 import { SignedImagesContext } from "../context/SignedImagesContext";
 import COLORS from "../constants/colors";
-import { SHADOW } from "../constants/design";
 import ImagePreview from "../components/ImagePreview";
 import SignatureData from "../components/SignatureData";
 import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
@@ -18,6 +17,7 @@ import QRCode from "react-native-qrcode-svg";
 import * as MailComposer from "expo-mail-composer";
 import { generateComposerOptions } from "../helpers/MailComposerHelper";
 import * as Sharing from "expo-sharing";
+import QRCodeContainer from "../components/QRCodeContainer";
 
 export default function SignatureSendingSuccessfulScreen({ route }) {
   const signedImagesContext = useContext(SignedImagesContext);
@@ -129,17 +129,17 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
           signature={response.signature}
           timestamp={response.timestamp}
         />
-        <View style={styles.qrCode}>
+        <QRCodeContainer style={styles.qrCodeContainer}>
           <QRCode
             value={JSON.stringify({
               public_key: response.public_key,
               signature: response.signature,
               timestamp: response.timestamp,
             })}
-            size={(width * 3) / 4}
+            size={(width * 3) / 4 - 2 * 10}
             getRef={extractQRCodePNGBase64}
           />
-        </View>
+        </QRCodeContainer>
         <HomeScreenButtonWhite
           title="Teilen"
           iconName="share"
@@ -162,8 +162,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  qrCode: {
-    ...SHADOW,
+  qrCodeContainer: {
     marginBottom: 20,
   },
 });

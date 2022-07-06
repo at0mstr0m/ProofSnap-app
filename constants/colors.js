@@ -9,6 +9,7 @@ const COLORS = Object.freeze({
   redGradient: { start: "#D82828", end: "#F88181" },
   blueGradient: { start: "#4065FF", end: "#7F96F7" },
   greenGradient: { start: "#16b94c", end: "#85faac" },
+  greyGradient: { start: "#444444", end: "transparent" },
 });
 
 export default COLORS;

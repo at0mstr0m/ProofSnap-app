@@ -12,3 +12,4 @@ export const SHADOW = {
 
 export const BORDER_RADIUS = 8;
 export const ICON_SIZE = 30;
+export const SIGNATURE_DATA_PADDING = 12;

@@ -8,7 +8,14 @@ import {
 } from "react-native";
 import { useState, useEffect } from "react";
 import COLORS from "../constants/colors";
-import { BORDER_RADIUS } from "../constants/design";
+import {
+  BORDER_RADIUS,
+  SHADOW,
+  SIGNATURE_DATA_PADDING,
+} from "../constants/design";
+import SignatureData from "../components/SignatureData";
+import { parseToDDMMYYYYdashHHMM } from "../helpers/DateHelper";
+import QRCodeContainer from "../components/QRCodeContainer";
 
 const MARGIN = 10;
 
@@ -43,20 +50,45 @@ export default function SignedImageDetailScreen({ navigation, route }) {
           alignItems: "center",
         }}
       >
-        <Image
-          style={styles.image}
-          source={{
-            uri: signedImageData.imageUri,
-            width: width - 2 * MARGIN,
-            height: imageHeight - 2 * MARGIN,
-          }}
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={{
+              uri: signedImageData.imageUri,
+              width: width - 2 * MARGIN,
+              height: imageHeight - 2 * MARGIN,
+            }}
+          />
+        </View>
+        <Text style={styles.timeTitle}>Aufnahmezeitpunkt:</Text>
+        <Text style={styles.time}>
+          {parseToDDMMYYYYdashHHMM(signedImageData.timestamp)}
+        </Text>
+        <SignatureData
+          publicKey={signedImageData.public_key}
+          signature={signedImageData.signature}
+          timestamp={signedImageData.timestamp}
         />
-        <Text>public_key: {signedImageData.public_key}</Text>
+        {/* <Text>public_key: {signedImageData.public_key}</Text>
         <Text>signature: {signedImageData.signature}</Text>
         <Text>
           qrCodePNGBase64.length: {signedImageData.qrCodePNGBase64.length}
         </Text>
-        <Text>imageUri: {signedImageData.imageUri}</Text>
+        <Text>imageUri: {signedImageData.imageUri}</Text> */}
+        <QRCodeContainer
+          style={{
+            width: (width * 3) / 4,
+            height: (width * 3) / 4,
+          }}
+        >
+          <Image
+            source={{
+              uri: "data:image/png;base64," + signedImageData.qrCodePNGBase64,
+              width: (width * 3) / 4 - SIGNATURE_DATA_PADDING * 2,
+              height: (width * 3) / 4 - SIGNATURE_DATA_PADDING * 2,
+            }}
+          />
+        </QRCodeContainer>
       </ScrollView>
     </View>
   );
@@ -69,8 +101,31 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  image: {
+  imageContainer: {
+    ...SHADOW,
     margin: MARGIN,
     borderRadius: BORDER_RADIUS,
+  },
+  image: {
+    borderRadius: BORDER_RADIUS,
+  },
+  title: {
+    fontFamily: "Montserrat_900Black",
+    fontWeight: "900",
+    color: COLORS.buttonText,
+    fontSize: 18,
+    textAlign: "center",
+  },
+  timeTitle: {
+    fontFamily: "Montserrat_400Regular",
+    color: COLORS.buttonText,
+    fontSize: 20,
+    textAlign: "center",
+  },
+  time: {
+    fontFamily: "Montserrat_900Black",
+    color: COLORS.buttonText,
+    fontSize: 23,
+    textAlign: "center",
   },
 });

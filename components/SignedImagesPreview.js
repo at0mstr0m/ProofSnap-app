@@ -9,12 +9,11 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import COLORS from "../constants/colors";
 import { BORDER_RADIUS, SHADOW } from "../constants/design";
+import { parseToDDMMYYYYdashHHMM } from "../helpers/DateHelper";
 
 export default function SignedImagesPreview({
   title,
-  public_key,
-  signature,
-  qrCodePNGBase64,
+  timestamp,
   imageUri,
   id,
   onPress,
@@ -33,18 +32,14 @@ export default function SignedImagesPreview({
       >
         <LinearGradient
           style={styles.linearGradient}
-          colors={["#444444", "transparent"]}
+          colors={[COLORS.greyGradient.start, COLORS.greyGradient.end]}
           start={{ x: 0.1, y: 0.1 }}
           end={{ x: 0.4, y: 0.7 }}
         >
           <View style={styles.details}>
-            <Text style={styles.text}>Title: {title}</Text>
-            <Text style={styles.text}>Date: N.N.</Text>
+            <Text style={styles.text}>{title}</Text>
+            <Text style={styles.text}>{parseToDDMMYYYYdashHHMM(timestamp)}</Text>
           </View>
-          {/* <Text>public_key: {public_key}</Text>
-            <Text>signature: {signature}</Text>
-            <Text>qrCodePNGBase64.length: {qrCodePNGBase64.length}</Text>
-            <Text>imageUri: {imageUri}</Text> */}
         </LinearGradient>
       </ImageBackground>
     </Pressable>
