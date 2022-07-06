@@ -5,6 +5,7 @@ import {
   ScrollView,
   useWindowDimensions,
   Image,
+  Platform,
 } from "react-native";
 import { useState, useEffect } from "react";
 import COLORS from "../constants/colors";
@@ -15,7 +16,11 @@ import {
 } from "../constants/design";
 import SignatureData from "../components/SignatureData";
 import { parseToDDMMYYYYdashHHMM } from "../helpers/DateHelper";
+import { openShareOptions, sendViaMail } from "../helpers/ShareHelper";
 import QRCodeContainer from "../components/QRCodeContainer";
+import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
+import * as FileSystem from "expo-file-system";
+
 
 const MARGIN = 10;
 
@@ -24,7 +29,12 @@ export default function SignedImageDetailScreen({ navigation, route }) {
   const { width } = useWindowDimensions();
   const [imageHeight, setImageHeight] = useState(width);
 
+  async function foo() {
+    
+  }
+
   useEffect(() => {
+    foo();
     // https://reactnavigation.org/docs/5.x/navigation-prop/#setoptions
     navigation.setOptions({
       title: signedImageData.title,
@@ -89,6 +99,23 @@ export default function SignedImageDetailScreen({ navigation, route }) {
             }}
           />
         </QRCodeContainer>
+        <HomeScreenButtonWhite
+          title="Teilen"
+          iconName="share"
+          onPress={openShareOptions.bind(this, signedImageData.imageUri)}
+        />
+        <HomeScreenButtonWhite
+          iconName="mail"
+          onPress={sendViaMail.bind(this, {
+            title: signedImageData.title,
+            publicKey: signedImageData.public_key,
+            signature: signedImageData.signature,
+            timestamp: signedImageData.timestamp,
+            qrCodePNGBase64: signedImageData.qrCodePNGBase64,
+            imageUri: signedImageData.imageUri,
+          })}
+          title="Per Mail senden"
+        />
       </ScrollView>
     </View>
   );

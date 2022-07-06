@@ -45,7 +45,6 @@ export default function TakePhotoScreen({ navigation }) {
     // cannot go on without an image
     if (newImage.cancelled) return;
     // console.log(newImage.exif);
-
     // width and height are confused on iOS, so they have to be switched
     if (Platform.OS === "ios") {
       let height = newImage.height;
