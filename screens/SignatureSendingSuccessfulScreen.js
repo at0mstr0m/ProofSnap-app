@@ -111,14 +111,6 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
     }
   }, [qrCodePNGBase64]);
 
-  console.log(
-    JSON.stringify({
-      public_key: response.public_key,
-      signature: response.signature,
-      timestamp: response.timestamp,
-    })
-  );
-
   return (
     <View style={styles.container}>
       <ScrollView

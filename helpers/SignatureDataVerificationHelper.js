@@ -26,7 +26,6 @@ export function verifySignatureData(data) {
   let unpackedData;
   try {
     unpackedData = JSON.parse(data);
-    console.log(unpackedData);
   } catch (error) {
     console.error(error);
     return { result: false };

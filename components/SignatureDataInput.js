@@ -42,7 +42,6 @@ export default function SignatureDataInput({
 
   async function pasteFromClipboard() {
     const clipboardText = await Clipboard.getStringAsync();
-    console.log("clipboardText", clipboardText);
     let signatureData;
     try {
       // parse object from Clipboard

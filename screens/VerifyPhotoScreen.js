@@ -40,7 +40,7 @@ export default function VerifyPhotoScreen({ navigation }) {
       exif: true,
     });
     if (newImage.cancelled) return;
-    console.log("newImage.exif", newImage.exif);
+    // console.log("newImage.exif", newImage.exif);
     // width and height are confused on iOS, so they have to be switched
     if (Platform.OS === "ios") {
       let height = newImage.height;

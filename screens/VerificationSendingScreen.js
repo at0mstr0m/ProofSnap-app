@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import COLORS from "../constants/colors";
-import { createAssetAsync } from "expo-media-library";
 import { generateHashes } from "../helpers/HashHelper";
 import { verifyHashes } from "../helpers/HttpHelper";
 import ImagePreview from "../components/ImagePreview";
@@ -14,10 +13,7 @@ export default function VerificationSendingScreen({ navigation, route }) {
   const [result, setResult] = useState(null);
 
   async function sendData() {
-    // const asset = await createAssetAsync(image.uri);
-    console.log(image.base64.length);
     const { sha256Hash, sha512Hash } = await generateHashes(image.base64);
-
     const httpResponse = await verifyHashes(
       sha256Hash,
       sha512Hash,
