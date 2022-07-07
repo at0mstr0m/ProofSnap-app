@@ -16,7 +16,7 @@ import {
 } from "../constants/design";
 import SignatureData from "../components/SignatureData";
 import { parseToDDMMYYYYdashHHMM } from "../helpers/DateHelper";
-import { openShareOptions, sendViaMailX, openShareOptionsX } from "../helpers/ShareHelper";
+import { openShareOptions, sendViaMail } from "../helpers/ShareHelper";
 import QRCodeContainer from "../components/QRCodeContainer";
 import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 
@@ -27,12 +27,7 @@ export default function SignedImageDetailScreen({ navigation, route }) {
   const { width } = useWindowDimensions();
   const [imageHeight, setImageHeight] = useState(width);
 
-  async function foo() {
-    
-  }
-
   useEffect(() => {
-    foo();
     // https://reactnavigation.org/docs/5.x/navigation-prop/#setoptions
     navigation.setOptions({
       title: signedImageData.title,
@@ -100,11 +95,11 @@ export default function SignedImageDetailScreen({ navigation, route }) {
         <HomeScreenButtonWhite
           title="Teilen"
           iconName="share"
-          onPress={Platform.OS === "android" ? openShareOptions.bind(this, signedImageData.imageUri) : openShareOptionsX.bind(this, signedImageData.imageUri)}
+          onPress={openShareOptions.bind(this, signedImageData.imageUri)}
         />
         <HomeScreenButtonWhite
           iconName="mail"
-          onPress={sendViaMailX.bind(this, {
+          onPress={sendViaMail.bind(this, {
             title: signedImageData.title,
             publicKey: signedImageData.public_key,
             signature: signedImageData.signature,

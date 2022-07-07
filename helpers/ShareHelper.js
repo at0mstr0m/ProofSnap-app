@@ -39,6 +39,16 @@ async function generateComposerOptions({
     encoding: FileSystem.EncodingType.Base64,
   });
   // await MediaLibrary.saveToLibraryAsync(qrImageUri); // needed to save qr code to camera roll
+
+  // Needed on SignedImageDetailScreen on iOS, because expo-sharing does not accept URIs starting with "ph://".
+  // As a workaround a local copy is made
+  if (imageUri.startsWith("ph://") || imageUri.startsWith("file:///storage/")) {
+    const newImageUri =
+      FileSystem.documentDirectory +
+      `image-${Math.floor(Math.random() * 9999999)}.jpg`; // add random number to filename
+    await FileSystem.copyAsync({ from: imageUri, to: newImageUri });
+    imageUri = newImageUri;
+  }
   return {
     // body: `Ich habe grade dieses Bild mit Proof Snap signiert!/npublicKey: ${publicKey}/nsignature: ${signature}/n <img src="${qrCodePNGBase64}" alt="Red dot" />`,
     body: html,
@@ -46,53 +56,6 @@ async function generateComposerOptions({
     subject: `ProofSnap Signatur von ${title}`,
     attachments: [imageUri, qrImageUri],
   };
-}
-
-async function generateComposerOptionsX({
-  title,
-  publicKey,
-  signature,
-  timestamp,
-  qrCodePNGBase64,
-  imageUri,
-}) {
-  const html = `
-  <!DOCTYPE html>
-  <html lang="de">
-  
-  <head>
-      <meta charset="utf-8">
-  </head>
-  
-  <body>
-      <p>Hallo!</p>
-      <p>Ich habe grade dieses Bild mit ProofSnap signiert.<br></p>
-      <p>Öffentlicher Schlüssel: ${publicKey}<br></p>
-      <p>Signatur: ${signature}<br></p>
-      <p>Zeitstempel: ${timestamp}<br></p>
-      </p>
-  </body>
-  
-  </html>
-  `;
-  // https://stackoverflow.com/a/63308035
-  const qrImageUri =
-    FileSystem.documentDirectory +
-    `qr-code-${Math.floor(Math.random() * 9999999)}.png`; // add random number to filename
-  await FileSystem.writeAsStringAsync(qrImageUri, qrCodePNGBase64, {
-    encoding: FileSystem.EncodingType.Base64,
-  });
-  const newImageUri =
-    FileSystem.documentDirectory +
-    `image-${Math.floor(Math.random() * 9999999)}.jpg`; // add random number to filename
-  await FileSystem.copyAsync({ from: imageUri, to: newImageUri });
-  return {
-    body: html,
-    isHtml: true,
-    subject: `ProofSnap Signatur von ${title}`,
-    attachments: [newImageUri, qrImageUri],
-  };
-  // }
 }
 
 export async function sendViaMail(composerOptions) {
@@ -105,42 +68,10 @@ export async function sendViaMail(composerOptions) {
     );
     return;
   }
-  console.log("====================================");
-  console.log({
-    title: composerOptions.title,
-    publicKey: composerOptions.publicKey,
-    signature: composerOptions.signature,
-    timestamp: composerOptions.timestamp,
-    qrCodePNGBase64: composerOptions.qrCodePNGBase64.length,
-    imageUri: composerOptions.imageUri,
-  });
-  console.log("====================================");
-  // open Mail composer
-  MailComposer.composeAsync(await generateComposerOptions(composerOptions));
-}
-
-export async function sendViaMailX(composerOptions) {
-  // Check if sending e-mails is available on the device. Only relevant on iOS.
-  if (!(await MailComposer.isAvailableAsync())) {
-    Alert.alert(
-      "E-Mail nicht eingerichtet",
-      "Bitte richten Sie einen E-Mail Account auf diesem Gerät ein.",
-      [{ text: "OK", style: "destructive" }]
-    );
-    return;
-  }
-  console.log("====================================");
-  console.log({
-    title: composerOptions.title,
-    publicKey: composerOptions.publicKey,
-    signature: composerOptions.signature,
-    timestamp: composerOptions.timestamp,
-    qrCodePNGBase64: composerOptions.qrCodePNGBase64.length,
-    imageUri: composerOptions.imageUri,
-  });
-  console.log("====================================");
-  // open Mail composer
-  MailComposer.composeAsync(await generateComposerOptionsX(composerOptions));
+  // prepare ComposerOptions
+  const options = await generateComposerOptions(composerOptions);
+  // open MailComposer
+  MailComposer.composeAsync(options);
 }
 
 export async function openShareOptions(imageUri) {
@@ -154,6 +85,16 @@ export async function openShareOptions(imageUri) {
     // abort if sharing is not available on the current device
     return;
   }
+  // Needed on SignedImageDetailScreen on iOS, because expo-sharing does not accept URIs starting with "ph://".
+  // As a workaround a local copy is made
+  if (imageUri.startsWith("ph://")) {
+    const newImageUri =
+      FileSystem.documentDirectory +
+      `image-${Math.floor(Math.random() * 9999999)}.jpg`; // add random number to filename
+    // create sharable copy
+    await FileSystem.copyAsync({ from: imageUri, to: newImageUri });
+    imageUri = newImageUri;
+  }
   // draw users attention to problems with compression
   Alert.alert(
     "Wichtiger Hinweis.",
@@ -164,44 +105,6 @@ export async function openShareOptions(imageUri) {
         style: "default",
         onPress: () =>
           Sharing.shareAsync(imageUri, {
-            // only used by iOS
-            // https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_conc/understand_utis_conc.html
-            UTI: "public.image",
-            // only used by Android
-            // https://stackoverflow.com/a/27550058/13128152
-            mimeType: "image/jpg",
-          }),
-      },
-      { text: "Abbrechen", style: "destructive" },
-    ]
-  );
-}
-
-export async function openShareOptionsX(imageUri) {
-  // check if sharing is available on the current device
-  if (!(await Sharing.isAvailableAsync())) {
-    Alert.alert(
-      "Teilen auf diesem Gerät nicht verfügbar.",
-      'Bitte versuchen sie die Funktion "Per Mail senden"',
-      [{ text: "OK", style: "destructive" }]
-    );
-    // abort if sharing is not available on the current device
-    return;
-  }
-  const newImageUri =
-    FileSystem.documentDirectory +
-    `image-${Math.floor(Math.random() * 9999999)}.jpg`; // add random number to filename
-  await FileSystem.copyAsync({ from: imageUri, to: newImageUri });
-  // draw users attention to problems with compression
-  Alert.alert(
-    "Wichtiger Hinweis.",
-    "Das Teilen dieses Bildes auf z.B. WhatsApp ist zwar möglich, jedoch wird hierbei die Bilddatei durch Kompression verändert und ist danach nicht mehr mit ProofSnap verifizierbar! ",
-    [
-      {
-        text: "Verstanden",
-        style: "default",
-        onPress: () =>
-          Sharing.shareAsync(newImageUri, {
             // only used by iOS
             // https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_conc/understand_utis_conc.html
             UTI: "public.image",
