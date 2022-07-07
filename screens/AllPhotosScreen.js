@@ -24,6 +24,10 @@ export default function AllPhotosScreen({ navigation }) {
         data={signedImagesContext.signedImages}
         keyExtractor={(item) => item.id}
         renderItem={renderSignedImagesPreviews}
+        showsVerticalScrollIndicator={false} // disable scrolling effects on all platforms
+        bounces={false} // https://reactnative.dev/docs/scrollview#bounces-ios
+        overScrollMode={"never"} // https://reactnative.dev/docs/scrollview.html#overscrollmode-android
+        style={styles.scroller}
       />
     </View>
   );
@@ -35,5 +39,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  scroller: {
+    flex: 1,
   },
 });

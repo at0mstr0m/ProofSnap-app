@@ -5,7 +5,6 @@ import {
   ScrollView,
   useWindowDimensions,
   Image,
-  Platform,
 } from "react-native";
 import { useState, useEffect } from "react";
 import COLORS from "../constants/colors";
@@ -15,10 +14,11 @@ import {
   SIGNATURE_DATA_PADDING,
 } from "../constants/design";
 import SignatureData from "../components/SignatureData";
-import { parseToDDMMYYYYdashHHMM } from "../helpers/DateHelper";
 import { openShareOptions, sendViaMail } from "../helpers/ShareHelper";
 import QRCodeContainer from "../components/QRCodeContainer";
 import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
+import ParsedTimestamp from "../components/Text/ParsedTimestamp";
+import Title from "../components/Text/Title";
 
 const MARGIN = 10;
 
@@ -63,10 +63,8 @@ export default function SignedImageDetailScreen({ navigation, route }) {
             }}
           />
         </View>
-        <Text style={styles.timeTitle}>Aufnahmezeitpunkt:</Text>
-        <Text style={styles.time}>
-          {parseToDDMMYYYYdashHHMM(signedImageData.timestamp)}
-        </Text>
+        <Title text={signedImageData.title} />
+        <ParsedTimestamp timestamp={signedImageData.timestamp} />
         <SignatureData
           publicKey={signedImageData.public_key}
           signature={signedImageData.signature}

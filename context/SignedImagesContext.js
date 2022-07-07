@@ -50,3 +50,14 @@ export function SignedImagesContextProvider({ children }) {
     </SignedImagesContext.Provider>
   );
 }
+
+// https://stackoverflow.com/a/1129270/13128152
+export function sortByNewest(itemA, itemB) {
+  if (itemA.timestamp < itemB.timestamp) {
+    return 1;
+  }
+  if (itemA.timestamp > itemB.timestamp) {
+    return -1;
+  }
+  return 0;
+}

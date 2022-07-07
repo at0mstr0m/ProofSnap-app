@@ -7,7 +7,6 @@ import {
   Pressable,
   Alert,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import COLORS from "../constants/colors";
 import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
 import ImagePreview from "../components/ImagePreview";
@@ -17,6 +16,7 @@ import SignatureDataInput from "../components/SignatureDataInput";
 import { requestPermissionsAsync } from "expo-media-library";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { verifySignatureData } from "../helpers/SignatureDataVerificationHelper";
+import PreconfiguredKeyboardAwareScrollView from "../components/PreconfiguredKeyboardAwareScrollView";
 
 export default function VerifyPhotoScreen({ navigation }) {
   const [image, setImage] = useState(null);
@@ -119,13 +119,7 @@ export default function VerifyPhotoScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <KeyboardAwareScrollView
-        showsVerticalScrollIndicator={false} // https://reactnative.dev/docs/scrollview#showsverticalscrollindicator
-        // disable scrolling effects on all platforms
-        bounces={false} // https://reactnative.dev/docs/scrollview#bounces-ios
-        overScrollMode={"never"} // https://reactnative.dev/docs/scrollview.html#overscrollmode-android
-        contentContainerStyle={styles.scrollView}
-      >
+      <PreconfiguredKeyboardAwareScrollView style={styles.scrollView}>
         {imagePreview}
         {buttonOrScanner}
         <SignatureDataInput
@@ -142,7 +136,7 @@ export default function VerifyPhotoScreen({ navigation }) {
           title="Verifizieren"
           style={styles.button}
         />
-      </KeyboardAwareScrollView>
+      </PreconfiguredKeyboardAwareScrollView>
     </View>
   );
 }
@@ -154,7 +148,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  scrollView: { alignItems: "center" },
+  scrollView: {
+    alignItems: "center",
+  },
   image: {
     // marginBottom: 50,
   },

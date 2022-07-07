@@ -21,12 +21,11 @@ export default function SignedImagesPreview({
   const { width } = useWindowDimensions();
   return (
     <Pressable onPress={onPress.bind(this, id)}>
-      {/* <Pressable onPress={() => onPress(id)}> */}
       <ImageBackground
         source={{ uri: imageUri }}
         style={[
           styles.container,
-          { width: (width * 3) / 4, height: (width * 3) / 4 },
+          { width: (width * 3) / 4, height: (((width * 3) / 4) * 2) / 3 },
         ]}
         imageStyle={styles.image} // only necessary because of iOS...
       >
@@ -38,7 +37,9 @@ export default function SignedImagesPreview({
         >
           <View style={styles.details}>
             <Text style={styles.text}>{title}</Text>
-            <Text style={styles.text}>{parseToDDMMYYYYdashHHMM(timestamp)}</Text>
+            <Text style={styles.text}>
+              {parseToDDMMYYYYdashHHMM(timestamp)}
+            </Text>
           </View>
         </LinearGradient>
       </ImageBackground>

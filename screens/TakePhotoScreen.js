@@ -8,7 +8,6 @@ import {
   useWindowDimensions,
   Alert,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import COLORS from "../constants/colors";
 import { SHADOW } from "../constants/design";
 import {
@@ -19,6 +18,7 @@ import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import { requestPermissionsAsync } from "expo-media-library";
 import ImagePreview from "../components/ImagePreview";
 import ImagePreviewPlaceholder from "../components/ImagePreviewPlaceholder";
+import PreconfiguredKeyboardAwareScrollView from "../components/PreconfiguredKeyboardAwareScrollView";
 
 export default function TakePhotoScreen({ navigation }) {
   const [image, setImage] = useState(null);
@@ -98,13 +98,7 @@ export default function TakePhotoScreen({ navigation }) {
     // https://stackoverflow.com/a/57730773
     <View style={[styles.container]}>
       {/* https://github.com/APSL/react-native-keyboard-aware-scroll-view */}
-      <KeyboardAwareScrollView
-        showsVerticalScrollIndicator={false} // https://reactnative.dev/docs/scrollview#showsverticalscrollindicator
-        // disable scrolling effects on all platforms
-        bounces={false} // https://reactnative.dev/docs/scrollview#bounces-ios
-        overScrollMode={"never"} // https://reactnative.dev/docs/scrollview.html#overscrollmode-android
-        contentContainerStyle={styles.scrollView}
-      >
+      <PreconfiguredKeyboardAwareScrollView style={styles.scrollView}>
         {imagePreview}
         <TextInput
           style={[styles.titleInput, { width: (width * 3) / 4 }]}
@@ -119,7 +113,7 @@ export default function TakePhotoScreen({ navigation }) {
           title="Signatur erstellen"
           style={styles.button}
         />
-      </KeyboardAwareScrollView>
+      </PreconfiguredKeyboardAwareScrollView>
     </View>
   );
 }

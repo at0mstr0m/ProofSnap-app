@@ -9,7 +9,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { SHADOW, BORDER_RADIUS } from "../../constants/design";
 
 export default function HomeScreenButtonGradient({
-  children,
+  title,
   onPress,
   startColor,
   endColor,
@@ -41,7 +41,7 @@ export default function HomeScreenButtonGradient({
           onPress={onPress}
           android_ripple={{ color: "grey" }}
         >
-          <Text style={styles.buttonText}>{children}</Text>
+          <Text style={styles.buttonText}>{title}</Text>
         </Pressable>
       </LinearGradient>
     </View>

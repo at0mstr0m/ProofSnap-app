@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  useWindowDimensions,
-  Platform
-} from "react-native";
+import { StyleSheet, View, Text, useWindowDimensions } from "react-native";
 import { useState, useContext, useEffect } from "react";
 import { SignedImagesContext } from "../context/SignedImagesContext";
 import COLORS from "../constants/colors";
@@ -15,6 +8,9 @@ import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import QRCode from "react-native-qrcode-svg";
 import QRCodeContainer from "../components/QRCodeContainer";
 import { openShareOptions, sendViaMail } from "../helpers/ShareHelper";
+import PreconfiguredScrollView from "../components/PreconfiguredScrollView";
+import ParsedTimestamp from "../components/Text/ParsedTimestamp";
+import Title from "../components/Text/Title";
 
 export default function SignatureSendingSuccessfulScreen({ route }) {
   const signedImagesContext = useContext(SignedImagesContext);
@@ -48,17 +44,10 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        showsVerticalScrollIndicator={false} // disable scrolling effects on all platforms
-        bounces={false} // https://reactnative.dev/docs/scrollview#bounces-ios
-        overScrollMode={"never"} // https://reactnative.dev/docs/scrollview.html#overscrollmode-android
-        contentContainerStyle={{
-          alignItems: "center",
-        }}
-      >
-        <Text>SendingSuccessfulScreen</Text>
-        <Text>Title: {title}</Text>
+      <PreconfiguredScrollView>
         <ImagePreview image={image} />
+        <Title text={title} />
+        <ParsedTimestamp timestamp={response.timestamp} />
         <SignatureData
           publicKey={response.public_key}
           signature={response.signature}
@@ -78,7 +67,7 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
         <HomeScreenButtonWhite
           title="Teilen"
           iconName="share"
-          onPress={openShareOptions.bind(this, image.uri)} // should not matter if assetUri or image.uri is used, but come what may image.uri should definitely be working
+          onPress={openShareOptions.bind(this, image.uri)} // assetUri can cause problems on iOS...
         />
         <HomeScreenButtonWhite
           iconName="mail"
@@ -88,11 +77,11 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
             signature: response.signature,
             timestamp: response.timestamp,
             qrCodePNGBase64: qrCodePNGBase64,
-            imageUri: image.uri, // should not matter if assetUri or image.uri is used, but come what may image.uri should definitely be working
+            imageUri: image.uri, // assetUri can cause problems on iOS...
           })}
           title="Per Mail senden"
         />
-      </ScrollView>
+      </PreconfiguredScrollView>
     </View>
   );
 }

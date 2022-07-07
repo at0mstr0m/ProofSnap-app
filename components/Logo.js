@@ -7,10 +7,13 @@ export default function Logo() {
     <View
       style={[
         styles.container,
-        { marginTop: height / 10, marginBottom: height / 20 },
+        {
+          marginTop: height / 10,
+          marginBottom: height / 20,
+        },
       ]}
     >
-      <Text style={styles.textContainer}>
+      <Text style={styles.textContainer} numberOfLines={1}>
         <Text style={styles.bold}>P</Text>
         <Text style={styles.regular}>roofSna</Text>
         <Text style={styles.bold}>P</Text>
@@ -26,7 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   textContainer: {
-    fontSize: 30,
+    fontSize: 40,
     color: COLORS.buttonText,
   },
   regular: {
