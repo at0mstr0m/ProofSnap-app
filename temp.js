@@ -1,12 +1,11 @@
 // code inspired by
 // https://github.com/academind/react-native-practical-guide-code/blob/07-redux-context/code/04-managing-favorite-meals/store/context/favorites-context.js
 
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 // https://github.com/uuidjs/uuid#getrandomvalues-not-supported
 // 'react-native-get-random-values' must be imported before uuid
 import "react-native-get-random-values";
 import { v4 as uuidV4 } from "uuid";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const SignedImagesContext = createContext({
   signedImages: [],
@@ -18,40 +17,20 @@ export const SignedImagesContext = createContext({
 export function SignedImagesContextProvider({ children }) {
   const [signedImages, setSignedImages] = useState([]);
 
-  async function loadSignedImagesFromAsyncStore() {
-    const allKeys = await AsyncStorage.getAllKeys();
-    if (allKeys.length === 0) return; // AsyncStorage seems to be empty, can stop here
-    const wholeStorage = await AsyncStorage.multiGet(allKeys);
-    for (const keyItemPair of wholeStorage) {
-      setSignedImages((currentSignedImagesIds) => [
-        ...currentSignedImagesIds,
-        JSON.parse(keyItemPair[1]),
-      ]);
-    }
-  }
-
-  useEffect(() => {
-    loadSignedImagesFromAsyncStore();
-  }, []);
-
   function addSignedImage(signedImageProps) {
-    const id = uuidV4();
-    const data = {
-      ...signedImageProps,
-      id: id,
-    };
-    setSignedImages((currentSignedImages) => [
-      ...currentSignedImages,
-      data,
+    setSignedImages((currentSignedImagesIds) => [
+      ...currentSignedImagesIds,
+      {
+        ...signedImageProps,
+        id: uuidV4(),
+      },
     ]);
-    AsyncStorage.setItem(id, JSON.stringify(data));
   }
 
   function removeSignedImage(id) {
     setSignedImages((currentSignedImages) =>
       currentSignedImages.filter((signedImage) => signedImage.id !== id)
     );
-    AsyncStorage.removeItem(id);
   }
 
   function getByID(id) {

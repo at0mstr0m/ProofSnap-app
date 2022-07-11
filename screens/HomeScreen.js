@@ -3,7 +3,7 @@ import {
   SignedImagesContext,
   sortByNewest,
 } from "../context/SignedImagesContext";
-import { StyleSheet, View, useWindowDimensions } from "react-native";
+import { StyleSheet, View, useWindowDimensions, Image } from "react-native";
 import HomeScreenButtonGradient from "../components/Buttons/HomeScreenButtonGradient";
 import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import SignedImagesPreview from "../components/SignedImagesPreview";
@@ -12,7 +12,7 @@ import COLORS from "../constants/colors";
 import PreconfiguredScrollView from "../components/PreconfiguredScrollView";
 
 export default function HomeScreen({ navigation }) {
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const signedImagesContext = useContext(SignedImagesContext);
 
   function imagePreviewPressHandler(id) {
@@ -50,7 +50,18 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <PreconfiguredScrollView>
-        <Logo />
+        {/* <Logo /> */}
+        <Image
+          source={require("../assets/icon.png")}
+          style={[
+            styles.logo,
+            {
+              width: width / 2,
+              height: width / 2,
+              marginTop: height / 18,
+            },
+          ]}
+        />
         <HomeScreenButtonWhite
           iconName="camera"
           onPress={() => navigation.navigate("TakePhotoScreen")}
@@ -95,6 +106,10 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
     alignItems: "center",
     // justifyContent: "center",
+  },
+  logo: {
+    marginBottom: 10,
+    borderRadius: 20,
   },
   doubleButtons: {
     flexDirection: "row",
