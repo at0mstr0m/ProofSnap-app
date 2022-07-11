@@ -1,12 +1,12 @@
 import {
   StyleSheet,
   View,
-  Text,
   ScrollView,
   useWindowDimensions,
   Image,
+  Alert,
 } from "react-native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import COLORS from "../constants/colors";
 import {
   BORDER_RADIUS,
@@ -19,10 +19,12 @@ import QRCodeContainer from "../components/QRCodeContainer";
 import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import ParsedTimestamp from "../components/Text/ParsedTimestamp";
 import Title from "../components/Text/Title";
+import { SignedImagesContext } from "../context/SignedImagesContext";
 
 const MARGIN = 10;
 
 export default function SignedImageDetailScreen({ navigation, route }) {
+  const signedImagesContext = useContext(SignedImagesContext);
   const signedImageData = route.params.signedImageData;
   const { width } = useWindowDimensions();
   const [imageHeight, setImageHeight] = useState(width);
@@ -42,6 +44,27 @@ export default function SignedImageDetailScreen({ navigation, route }) {
     // https://stackoverflow.com/a/65007703/13128152
     return () => setImageHeight(width);
   }, []);
+
+  function handleDelete() {
+    Alert.alert(
+      "Löschen",
+      "Das Foto wird nur aus der Liste gelöscht, es bleibt weiterhin auf diesem Gerät gespeichert und bleibt auch weiterhin verifizierbar.",
+      [
+        {
+          text: "Verstanden",
+          style: "default",
+          onPress: () => {
+            signedImagesContext.removeSignedImage(signedImageData.id);
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "HomeScreen" }],
+            });
+          },
+        },
+        { text: "Abbrechen", style: "destructive" },
+      ]
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -106,6 +129,11 @@ export default function SignedImageDetailScreen({ navigation, route }) {
             imageUri: signedImageData.imageUri,
           })}
           title="Per Mail senden"
+        />
+        <HomeScreenButtonWhite
+          title="Löschen"
+          iconName="delete"
+          onPress={handleDelete}
         />
       </ScrollView>
     </View>

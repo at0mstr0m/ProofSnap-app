@@ -98,7 +98,7 @@ export async function openShareOptions(imageUri) {
   // draw users attention to problems with compression
   Alert.alert(
     "Wichtiger Hinweis.",
-    "Das Teilen dieses Bildes auf z.B. WhatsApp ist zwar möglich, jedoch wird hierbei die Bilddatei durch Kompression verändert und ist danach nicht mehr mit ProofSnap verifizierbar! ",
+    "Das Teilen dieses Bildes auf z.B. WhatsApp ist zwar möglich, jedoch wird hierbei die Bilddatei durch Kompression verändert und ist danach nicht mehr mit ProofSnap verifizierbar!",
     [
       {
         text: "Verstanden",

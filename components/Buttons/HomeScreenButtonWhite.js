@@ -20,7 +20,7 @@ export default function HomeScreenButtonWhite({
   iconName,
   style,
 }) {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   let icon;
   switch (iconName) {
     case "camera":
@@ -72,6 +72,11 @@ export default function HomeScreenButtonWhite({
           size={ICON_SIZE}
           color={COLORS.buttonText}
         />
+      );
+      break;
+    case "delete":
+      icon = (
+        <Ionicons name="md-trash" size={ICON_SIZE} color={COLORS.buttonText} />
       );
       break;
     default:
