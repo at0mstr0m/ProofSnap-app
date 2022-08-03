@@ -1,13 +1,17 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
+import Title from "../components/Text/Title";
 import COLORS from "../constants/colors";
+import { Foundation } from "@expo/vector-icons";
 
 export default function VerificationSendingSuccessfulScreen({ route }) {
   const result = route.params.result;
 
   return (
     <View style={styles.container}>
-      <Text>VerificationSendingSuccessfulScreen</Text>
-      <Text>Result: {result}</Text>
+      <Title text="Signatur gültig" />
+      <View style={styles.icon}>
+        <Foundation name="check" size={50} color={COLORS.buttonText} />
+      </View>
     </View>
   );
 }
@@ -18,5 +22,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  icon: {
+    marginTop: 20,
   },
 });

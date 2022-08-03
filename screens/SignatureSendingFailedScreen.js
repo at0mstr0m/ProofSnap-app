@@ -1,5 +1,6 @@
 import { StyleSheet, View, Text } from "react-native";
 import ImagePreview from "../components/ImagePreview";
+import Title from "../components/Text/Title";
 import COLORS from "../constants/colors";
 
 export default function SignatureSendingFailedScreen({ route }) {
@@ -8,8 +9,7 @@ export default function SignatureSendingFailedScreen({ route }) {
 
   return (
     <View style={styles.container}>
-      <Text>SignatureSendingFailedScreen</Text>
-      <Text>Title: {title}</Text>
+      <Title text={title} />
       <ImagePreview image={image} />
     </View>
   );

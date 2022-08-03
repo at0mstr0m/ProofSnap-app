@@ -5,6 +5,7 @@ import { createAssetAsync } from "expo-media-library";
 import { generateHashes } from "../helpers/HashHelper";
 import { signHashes } from "../helpers/HttpHelper";
 import ImagePreview from "../components/ImagePreview";
+import Title from "../components/Text/Title";
 
 export default function SignatureSendingScreen({ navigation, route }) {
   const image = route.params.image;
@@ -82,9 +83,12 @@ export default function SignatureSendingScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <Text>SignatureSendingScreen</Text>
-      <ActivityIndicator size="large" color={COLORS.buttonText} />
-      <Text>Title: {title}</Text>
+      <Title text={title}/>
+      <ActivityIndicator
+        style={styles.activityIndicator}
+        size="large"
+        color={COLORS.buttonText}
+      />
       <ImagePreview image={image} />
     </View>
   );
@@ -96,5 +100,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  activityIndicator: {
+    marginVertical: 40,
   },
 });

@@ -87,7 +87,6 @@ export default function VerificationSendingScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <Text>VerificationSendingScreen</Text>
       <ActivityIndicator size="large" color={COLORS.buttonText} />
       <ImagePreview image={image} />
     </View>

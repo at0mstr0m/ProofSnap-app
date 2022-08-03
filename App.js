@@ -82,6 +82,7 @@ export default function App() {
             options={{
               animation: "slide_from_right",
               headerStyle: { backgroundColor: COLORS.header },
+              title: "Info",
             }}
           />
           <Stack.Screen
@@ -90,6 +91,7 @@ export default function App() {
             options={{
               animation: "slide_from_right",
               headerStyle: { backgroundColor: COLORS.header },
+              title: "Login",
             }}
           />
           <Stack.Screen
@@ -116,6 +118,7 @@ export default function App() {
             options={{
               animation: "slide_from_right",
               headerStyle: { backgroundColor: COLORS.header },
+              title: "Alle Aufnahmen",
             }}
           />
           <Stack.Screen

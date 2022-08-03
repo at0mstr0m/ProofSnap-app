@@ -1,9 +1,11 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, useWindowDimensions } from "react-native";
 import COLORS from "../../constants/colors";
 
 export default function Title({ text }) {
+  const { width } = useWindowDimensions();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { width: (width * 3) / 4 }]}>
       <Text style={styles.title}>{text}</Text>
     </View>
   );
