@@ -55,6 +55,12 @@ export default function VerifyPhotoScreen({ navigation }) {
   }
 
   async function initVerification() {
+    if (!image) { // must have an image loaded
+      Alert.alert("Foto fehlt", "Bitte wählen Sie ein Foto zum verifizieren aus.", [
+        { text: "OK", style: "destructive" },
+      ]);
+      return;
+    } 
     navigation.reset({
       index: 0,
       routes: [
