@@ -15,7 +15,11 @@ import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import SignatureDataInput from "../components/SignatureDataInput";
 import { requestPermissionsAsync } from "expo-media-library";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { verifySignatureData } from "../helpers/SignatureDataVerificationHelper";
+import {
+  isPossibleKey,
+  isPossibleTimestamp,
+  verifySignatureData,
+} from "../helpers/SignatureDataVerificationHelper";
 import PreconfiguredKeyboardAwareScrollView from "../components/PreconfiguredKeyboardAwareScrollView";
 
 export default function VerifyPhotoScreen({ navigation }) {
@@ -55,12 +59,37 @@ export default function VerifyPhotoScreen({ navigation }) {
   }
 
   async function initVerification() {
-    if (!image) { // must have an image loaded
-      Alert.alert("Foto fehlt", "Bitte wählen Sie ein Foto zum verifizieren aus.", [
-        { text: "OK", style: "destructive" },
-      ]);
+    // must have an image loaded
+    if (!image) {
+      Alert.alert(
+        "Foto fehlt",
+        "Bitte wählen Sie ein Foto zum verifizieren aus.",
+        [{ text: "OK", style: "destructive" }]
+      );
       return;
-    } 
+    }
+    // signature Data must be entered
+    if (!publicKey || !signature || !timestamp) {
+      Alert.alert(
+        "Signaturdaten unvollständig",
+        "Bitte geben Sie die Signaturdaten ein.",
+        [{ text: "OK", style: "destructive" }]
+      );
+      return;
+    }
+    // signature Data must be plausible
+    if (
+      !isPossibleKey(publicKey) ||
+      !isPossibleKey(signature) ||
+      !isPossibleTimestamp(timestamp)
+    ) {
+      Alert.alert(
+        "Signaturdaten unvollständig",
+        "Die eingegebenen Signaturdaten sind unvollständig.",
+        [{ text: "OK", style: "destructive" }]
+      );
+      return;
+    }
     navigation.reset({
       index: 0,
       routes: [
