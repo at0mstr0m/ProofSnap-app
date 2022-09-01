@@ -1,5 +1,6 @@
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
+// preconfigured to look the same on Android and iOS
 export default function PreconfiguredKeyboardAwareScrollView({
   children,
   style,

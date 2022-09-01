@@ -25,10 +25,13 @@ import VerificationSendingFailedScreen from "./screens/VerificationSendingFailed
 import SignedImageDetailScreen from "./screens/SignedImageDetailScreen";
 import { SignedImagesContextProvider } from "./context/SignedImagesContext";
 
+// Entry point for the whole app.
+
 // https://reactnavigation.org/docs/hello-react-navigation#creating-a-native-stack-navigator
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  // The following code is necessary to load the fonts correctly...
   // https://docs.expo.dev/versions/latest/sdk/splash-screen/
   const [appIsReady, setAppIsReady] = useState(false);
   useEffect(() => {
@@ -53,6 +56,7 @@ export default function App() {
     prepare();
   }, []);
 
+  // still necessary to loads fonts...
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady) {
       // This tells the splash screen to hide immediately! If we call this after
@@ -70,14 +74,19 @@ export default function App() {
 
   return (
     <>
+      {/* The StatusBar is visible throughout the app. */}
       <StatusBar
         animated={true}
         backgroundColor={COLORS.header}
         hidden={false}
       />
+      {/* The ContextProvider makes its content available to the surrounded children. */}
       <SignedImagesContextProvider>
+        {/* The NavigationContainer handles the navigation through the app. */}
         <NavigationContainer onReady={onLayoutRootView}>
+          {/* The Stack.Navigator takes care of the order in which the Stack.Screens are called. */}
           <Stack.Navigator initialRouteName="HomeScreen">
+            {/* This are all Screens inside the app. */}
             <Stack.Screen
               name="HomeScreen"
               component={HomeScreen}

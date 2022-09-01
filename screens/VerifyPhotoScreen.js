@@ -22,21 +22,27 @@ import {
 } from "../helpers/SignatureDataVerificationHelper";
 import PreconfiguredKeyboardAwareScrollView from "../components/PreconfiguredKeyboardAwareScrollView";
 
-export default function VerifyPhotoScreen({ navigation }) {
-  const [image, setImage] = useState(null);
-  const [publicKey, setPublicKey] = useState("");
-  const [signature, setSignature] = useState("");
-  const [timestamp, setTimestamp] = useState("");
-  const [scanned, setScanned] = useState(false);
-  const [scannerActivated, setScannerActivated] = useState(false);
-  const { width, height } = useWindowDimensions();
+// This screen leads the user through the process of verifying an image
 
+export default function VerifyPhotoScreen({ navigation }) {
+  const [image, setImage] = useState(null); // stores the captured image
+  const [publicKey, setPublicKey] = useState(""); // signature data
+  const [signature, setSignature] = useState(""); // signature data
+  const [timestamp, setTimestamp] = useState(""); // signature data
+  const [scannerActivated, setScannerActivated] = useState(false); // necessary to decide if the qr code scanner is opened
+  const [scanned, setScanned] = useState(false); // true if scanning a qr code was successful
+  const { width, height } = useWindowDimensions(); // screen width & height is used for styling
+
+  // handles image selection
   async function selectImage() {
+    // Permission to use the phones media library is necessary
+    // and will be requested from user if not yet granted.
     const mediaLibraryPermissionResponse = await requestPermissionsAsync();
     if (!mediaLibraryPermissionResponse.granted) {
       console.error("permission not granted");
       return;
     }
+    // user must select an image from image library
     const newImage = await launchImageLibraryAsync({
       mediaTypes: MediaTypeOptions.Images,
       allowsEditing: false,
@@ -58,6 +64,7 @@ export default function VerifyPhotoScreen({ navigation }) {
     setScannerActivated(true);
   }
 
+  // init sending image and signature data to the backend
   async function initVerification() {
     // must have an image loaded
     if (!image) {
@@ -90,6 +97,9 @@ export default function VerifyPhotoScreen({ navigation }) {
       );
       return;
     }
+    // Hand over image and signature data to VerificationSendingScreen
+    // without the possibility to go back.
+    // By this the verification process cannot be started multiple times.
     navigation.reset({
       index: 0,
       routes: [
@@ -107,7 +117,7 @@ export default function VerifyPhotoScreen({ navigation }) {
   }
 
   function handleBarCodeScanned({ data }) {
-    setScanned(true); // avoids render errors
+    setScanned(true); // avoids rendering errors
     const qrVerificationResult = verifySignatureData(data);
     if (!qrVerificationResult.result) {
       Alert.alert(
@@ -131,6 +141,7 @@ export default function VerifyPhotoScreen({ navigation }) {
       <ImagePreview image={image} method="verify" onPress={selectImage} />
     );
 
+  // renders button or qr code scanner
   const buttonOrScanner = scannerActivated ? (
     <Pressable onPress={() => setScannerActivated(false)}>
       <BarCodeScanner

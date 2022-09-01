@@ -7,14 +7,17 @@ import { StyleSheet, View, useWindowDimensions, Image } from "react-native";
 import HomeScreenButtonGradient from "../components/Buttons/HomeScreenButtonGradient";
 import HomeScreenButtonWhite from "../components/Buttons/HomeScreenButtonWhite";
 import SignedImagesPreview from "../components/SignedImagesPreview";
-import Logo from "../components/Logo";
 import COLORS from "../constants/colors";
 import PreconfiguredScrollView from "../components/PreconfiguredScrollView";
 
+// The Screen that is shown when the app has launched.
 export default function HomeScreen({ navigation }) {
   const { width, height } = useWindowDimensions();
   const signedImagesContext = useContext(SignedImagesContext);
+  let imagePreviews = []; // stores max 3 rendered preview items
+  let previewItems = []; // stores data of max 3 items
 
+  // opens SignedImageDetailScreen for the pressed ImagePreview
   function imagePreviewPressHandler(id) {
     navigation.navigate("SignedImageDetailScreen", {
       signedImageData: signedImagesContext.getByID(id),
@@ -32,7 +35,6 @@ export default function HomeScreen({ navigation }) {
   }
 
   // previews of up to 3 most recent signed images
-  let imagePreviews = [];
   if (signedImagesContext.signedImages.length === 1) {
     imagePreviews = signedImagesContext.signedImages;
   } else if (signedImagesContext.signedImages.length > 1) {
@@ -40,7 +42,6 @@ export default function HomeScreen({ navigation }) {
       .sort(sortByNewest)
       .slice(0, 3);
   }
-  let previewItems = [];
   if (imagePreviews?.length > 0) {
     for (const imagePreview of imagePreviews) {
       previewItems.push(renderSignedImagesPreviews(imagePreview));
