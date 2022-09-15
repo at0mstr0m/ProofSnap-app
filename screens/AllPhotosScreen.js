@@ -5,15 +5,18 @@ import COLORS from "../constants/colors";
 import SignedImagesPreview from "../components/SignedImagesPreview";
 import Title from "../components/Text/Title";
 
+// On this screen the user can see all signed images in a list of previews.
 export default function AllPhotosScreen({ navigation }) {
   const signedImagesContext = useContext(SignedImagesContext);
 
+  // handles opening SignedImageDetailScreen when a SignedImagesPreview is pressed
   function imagePreviewPressHandler(id) {
     navigation.navigate("SignedImageDetailScreen", {
       signedImageData: signedImagesContext.getByID(id),
     });
   }
 
+  // handles rendering all the previews
   function renderSignedImagesPreviews(itemData) {
     const itemProps = { ...itemData.item, onPress: imagePreviewPressHandler };
     return <SignedImagesPreview {...itemProps} />;
@@ -21,7 +24,7 @@ export default function AllPhotosScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-    {/* if there are no signed Images, display text instead */}
+      {/* if there are no signed Images, display text instead */}
       {signedImagesContext.signedImages.length !== 0 ? (
         <FlatList
           data={signedImagesContext.signedImages}

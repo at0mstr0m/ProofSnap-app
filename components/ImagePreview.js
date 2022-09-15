@@ -8,6 +8,7 @@ import {
 import { SHADOW, BORDER_RADIUS } from "../constants/design";
 import { calculateImageDimensions } from "../helpers/ImageHelper";
 
+// displays a preview of an image
 export default function ImagePreview({ image, method, onPress }) {
   const { width } = useWindowDimensions();
   const { imageWidth, imageHeight } = calculateImageDimensions(

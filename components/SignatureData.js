@@ -6,9 +6,11 @@ import * as Clipboard from "expo-clipboard";
 
 const MARGIN = 12;
 
+// displays the signature data
 export default function SignatureData({ publicKey, signature, timestamp }) {
   const { width } = useWindowDimensions();
 
+  // handles copying the signature data to clipboard
   async function copyToClipboard() {
     await Clipboard.setStringAsync(
       JSON.stringify({

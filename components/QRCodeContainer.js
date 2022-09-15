@@ -2,6 +2,7 @@ import { StyleSheet, View } from "react-native";
 import COLORS from "../constants/colors";
 import { SHADOW, BORDER_RADIUS, SIGNATURE_DATA_PADDING } from "../constants/design";
 
+// displays a QR-Code
 export default function QRCodeContainer({ children, style }) {
   return <View style={[styles.container, style]}>{children}</View>;
 }

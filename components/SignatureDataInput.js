@@ -18,6 +18,7 @@ import {
 
 const MARGIN = 12;
 
+// signature data gan be put in with this component
 export default function SignatureDataInput({
   publicKey,
   setPublicKey,
@@ -40,6 +41,7 @@ export default function SignatureDataInput({
     setTimestamp(enteredText);
   }
 
+  // handles pasting from clipboard
   async function pasteFromClipboard() {
     const clipboardText = await Clipboard.getStringAsync();
     let signatureData;

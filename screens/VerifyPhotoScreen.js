@@ -23,7 +23,6 @@ import {
 import PreconfiguredKeyboardAwareScrollView from "../components/PreconfiguredKeyboardAwareScrollView";
 
 // This screen leads the user through the process of verifying an image
-
 export default function VerifyPhotoScreen({ navigation }) {
   const [image, setImage] = useState(null); // stores the captured image
   const [publicKey, setPublicKey] = useState(""); // signature data

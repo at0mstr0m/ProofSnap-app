@@ -7,19 +7,17 @@ import { signHashes } from "../helpers/HttpHelper";
 import ImagePreview from "../components/ImagePreview";
 import Title from "../components/Text/Title";
 
+// is displayed while signature is running on the backend
 export default function SignatureSendingScreen({ navigation, route }) {
   const image = route.params.image;
   const title = route.params.title;
   const [result, setResult] = useState(null);
 
+  //handles hashing and sending data to the backend for signing
   async function sendData() {
     const asset = await createAssetAsync(image.uri);
-    // console.log("image.uri", image.uri);
-    // console.log("asset.uri", asset.uri);
-    // console.log("image.base64.length:", image.base64.length);
     const { sha256Hash, sha512Hash } = await generateHashes(image.base64);
     const httpResponse = await signHashes(sha256Hash, sha512Hash);
-    // console.log("httpResponse:", httpResponse);
     if (
       httpResponse?.status === 201 &&
       httpResponse.data?.message === "successfully signed"
@@ -83,7 +81,7 @@ export default function SignatureSendingScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <Title text={title}/>
+      <Title text={title} />
       <ActivityIndicator
         style={styles.activityIndicator}
         size="large"

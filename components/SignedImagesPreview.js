@@ -11,6 +11,7 @@ import COLORS from "../constants/colors";
 import { BORDER_RADIUS, SHADOW } from "../constants/design";
 import { parseToDDMMYYYYdashHHMM } from "../helpers/DateHelper";
 
+// displays a signed image preview
 export default function SignedImagesPreview({
   title,
   timestamp,

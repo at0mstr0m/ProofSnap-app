@@ -8,6 +8,7 @@ import "react-native-get-random-values";
 import { v4 as uuidV4 } from "uuid";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// necessary to share data across screens and persist it in the application
 export const SignedImagesContext = createContext({
   signedImages: [],
   addSignedImage: (signedImage) => {},

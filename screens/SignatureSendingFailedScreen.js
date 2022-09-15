@@ -3,6 +3,7 @@ import ImagePreview from "../components/ImagePreview";
 import Title from "../components/Text/Title";
 import COLORS from "../constants/colors";
 
+// is displayed when something goes wrong during signing 
 export default function SignatureSendingFailedScreen({ route }) {
   const image = route.params.image;
   const title = route.params.title;

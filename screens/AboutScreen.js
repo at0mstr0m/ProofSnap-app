@@ -3,6 +3,7 @@ import PreconfiguredScrollView from "../components/PreconfiguredScrollView";
 import Title from "../components/Text/Title";
 import COLORS from "../constants/colors";
 
+// This screen displays info about the application.
 export default function About({ params }) {
   const { width } = useWindowDimensions();
   return (

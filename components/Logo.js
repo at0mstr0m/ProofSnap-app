@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View, useWindowDimensions } from "react-native";
 import COLORS from "../constants/colors";
 
+// displays the ProofSnap Logo
 export default function Logo() {
-  const { width, height } = useWindowDimensions();
+  const { height } = useWindowDimensions();
   return (
     <View
       style={[

@@ -23,13 +23,15 @@ import { SignedImagesContext } from "../context/SignedImagesContext";
 
 const MARGIN = 10;
 
+// displays all available Info about the signed image
 export default function SignedImageDetailScreen({ navigation, route }) {
   const signedImagesContext = useContext(SignedImagesContext);
   const signedImageData = route.params.signedImageData;
-  const { width } = useWindowDimensions();
-  const [imageHeight, setImageHeight] = useState(width);
+  const { width } = useWindowDimensions(); // necessary for styling
+  const [imageHeight, setImageHeight] = useState(width); // necessary for styling
 
   useEffect(() => {
+    // sets the image title in the navigation bar
     // https://reactnavigation.org/docs/5.x/navigation-prop/#setoptions
     navigation.setOptions({
       title: signedImageData.title,
@@ -45,6 +47,7 @@ export default function SignedImageDetailScreen({ navigation, route }) {
     return () => setImageHeight(width);
   }, []);
 
+  // handles deleting the image data
   function handleDelete() {
     Alert.alert(
       "Löschen",

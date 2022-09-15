@@ -22,7 +22,7 @@ async function generateComposerOptions({
   
   <body>
       <p>Hallo!</p>
-      <p>Ich habe grade dieses Bild mit ProofSnap signiert.<br></p>
+      <p>Ich habe gerade dieses Bild mit ProofSnap signiert.<br></p>
       <p>Öffentlicher Schlüssel: ${publicKey}<br></p>
       <p>Signatur: ${signature}<br></p>
       <p>Zeitstempel: ${timestamp}<br></p>

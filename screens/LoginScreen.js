@@ -2,6 +2,7 @@ import { StyleSheet, View, Text } from "react-native";
 import Title from "../components/Text/Title";
 import COLORS from "../constants/colors";
 
+// a placeholding screen for a login feature
 export default function Login() {
   return (
     <View style={styles.container}>

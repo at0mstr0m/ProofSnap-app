@@ -3,8 +3,9 @@ import { SHADOW, BORDER_RADIUS } from "../constants/design";
 import { Foundation } from "@expo/vector-icons";
 import COLORS from "../constants/colors";
 
+// looks like ImagePreview but without an image
 export default function ImagePreviewPlaceholder({ onPress }) {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const containerWidth = (width * 3) / 4;
   const containerHeight = (containerWidth * 4) / 3;
 

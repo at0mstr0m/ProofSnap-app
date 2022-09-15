@@ -3,6 +3,7 @@ import Title from "../components/Text/Title";
 import COLORS from "../constants/colors";
 import { Foundation } from "@expo/vector-icons";
 
+// is displayed when the verification returns false
 export default function VerificationSendingFailedScreen() {
   return (
     <View style={styles.container}>

@@ -5,6 +5,7 @@ import { generateHashes } from "../helpers/HashHelper";
 import { verifyHashes } from "../helpers/HttpHelper";
 import ImagePreview from "../components/ImagePreview";
 
+// is displayed while the verification is running on the backend
 export default function VerificationSendingScreen({ navigation, route }) {
   const image = route.params.image;
   const publicKey = route.params.publicKey;

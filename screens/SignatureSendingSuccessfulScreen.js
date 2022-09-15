@@ -12,15 +12,18 @@ import PreconfiguredScrollView from "../components/PreconfiguredScrollView";
 import ParsedTimestamp from "../components/Text/ParsedTimestamp";
 import Title from "../components/Text/Title";
 
+// This screen is displayed when signature was successful.
+// Contains all the signature data and the image file and its signature data can directly be shared
 export default function SignatureSendingSuccessfulScreen({ route }) {
   const signedImagesContext = useContext(SignedImagesContext);
-  const { width } = useWindowDimensions();
+  const { width } = useWindowDimensions(); // necessary for styling
   const [qrCodePNGBase64, setQRCodePNGBase64] = useState("");
   const response = route.params.result.response;
   const assetUri = route.params.result.assetUri;
-  const image = route.params.image;
+  const image = route.params.image; // contains the signed image file
   const title = route.params.title;
 
+  // save QR-Code
   async function extractQRCodePNGBase64(qrData) {
     if (!qrData) return;
     qrData.toDataURL((base64) => {
@@ -29,6 +32,8 @@ export default function SignatureSendingSuccessfulScreen({ route }) {
     });
   }
 
+  // Save signature data on the device using context.
+  // Is executed once when this screen is opened.
   useEffect(() => {
     if (qrCodePNGBase64) {
       signedImagesContext.addSignedImage({

@@ -21,7 +21,6 @@ import ImagePreviewPlaceholder from "../components/ImagePreviewPlaceholder";
 import PreconfiguredKeyboardAwareScrollView from "../components/PreconfiguredKeyboardAwareScrollView";
 
 // This screen leads the user through the process of signing an image
-
 export default function TakePhotoScreen({ navigation }) {
   const [image, setImage] = useState(null); // stores the captured image
   const [enteredTitle, setEnteredTitle] = useState(""); // stores the image title
