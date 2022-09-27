@@ -25,7 +25,7 @@ export async function signHashes(sha256Hash, sha512Hash) {
       },
       body: payload,
     });
-    console.log(JSON.stringify(response));
+    // console.log(JSON.stringify(response));
     */
   try {
     response = await axios.post(`${BACKEND_IP}/sign`, payload, REQUEST_CONFIG);

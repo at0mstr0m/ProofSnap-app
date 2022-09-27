@@ -13,8 +13,6 @@ export async function generateHashes(base64String) {
       CryptoDigestAlgorithm.SHA512,
       base64String
     );
-    console.log(sha256Hash);
-    console.log(sha512Hash);
   } catch (error) {
     console.error(error);
   }
